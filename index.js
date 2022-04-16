@@ -5,7 +5,7 @@ const currentVersion = JSON.parse(fs.readFileSync(
 
 const entryPoint = `${__dirname}/webIndex.js`;
 const buildDir = `${__dirname}/build/`;
-const buildFile = `${buildDir}/webUtils.js`;
+const buildFile = `${buildDir}/oci.js`;
 
 let buildPackage = () => {
   fs.mkdirSync(buildDir, {recursive: true});
