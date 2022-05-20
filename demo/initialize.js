@@ -26,7 +26,7 @@ let init = () => {
   let ci = new oci.CanvasInterface($.get('#Canvas').elm);
   setInterval(() => {
     ci.update();
-    ci.view.zoom = Math.min(ci.canvas.width/(9.5*250+175), ci.canvas.height/1600);
+    ci.view.zoom = Math.min(ci.canvas.width/(9.5*250+175), ci.canvas.height/2e3);
     FRAME++;
     meter.tick();
   }, 1e3/FPS);
@@ -45,7 +45,7 @@ let init = () => {
   })
 
   let stars = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((s) => {
-    let reg = new oci.elm.Star(ci, new oci.Vector((s-2.5)*250, 600), s, 100-((13-s)*8), 100);
+    let reg = new oci.elm.StarPolygon(ci, new oci.Vector((s-2.5)*250, 600), s, 100-((13-s)*8), 100);
     reg.tex.lineWidth = 3;
     reg.tex.outline = new oci.Color(255, 255, 255);
     reg.tex.fill = new oci.Color(75, 255-s*15, s*15);
@@ -100,5 +100,36 @@ let init = () => {
     rect.trf.scale = (Math.sin(2 * FRAME/FPS)) * .3 + .8;
     rect.trf.rotate = Math.sin(2 * FRAME/FPS);
     rect.trf.translate.x = 150 * Math.sin(2 * FRAME/FPS);
+  }, 1e3/FPS);
+
+  let elsl = new oci.elm.EllipseSlice(ci, new oci.Vector(200, 1800),
+    new oci.Vector(170, 80), 1.25*Math.PI);
+  elsl.tex.lineWidth = 3;
+  elsl.tex.fill = new oci.Color(160, 70, 100);
+  elsl.tex.outline = new oci.Color(255, 255, 255);
+
+  let cisl = new oci.elm.CircleSlice(ci, new oci.Vector(550, 1800),
+    140, 1.25*Math.PI);
+  cisl.tex.lineWidth = 3;
+  cisl.tex.fill = new oci.Color(160, 70, 100);
+  cisl.tex.outline = new oci.Color(255, 255, 255);
+
+  let ellipse = new oci.elm.Ellipse(ci, new oci.Vector(900, 1800),
+    new oci.Vector(170, 80));
+  ellipse.tex.lineWidth = 3;
+  ellipse.tex.fill = new oci.Color(160, 70, 100);
+  ellipse.tex.outline = new oci.Color(255, 255, 255);
+
+  let circle = new oci.elm.Circle(ci, new oci.Vector(1250, 1800), 140);
+  circle.tex.lineWidth = 3;
+  circle.tex.fill = new oci.Color(160, 70, 100);
+  circle.tex.outline = new oci.Color(255, 255, 255);
+
+  setInterval(() => {
+    let speed = 1.25;
+    // elsl.trf.rotate = speed*FRAME/FPS;
+    // cisl.trf.rotate = speed*FRAME/FPS;
+    // ellipse.trf.rotate = speed*FRAME/FPS;
+    // circle.trf.rotate = speed*FRAME/FPS;
   }, 1e3/FPS);
 }

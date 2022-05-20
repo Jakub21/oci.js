@@ -1,9 +1,14 @@
 
 module.exports = {
   Polygon: require('./Polygon'),
-  Rectangle: require('./Rectangle'),
-  RegularPolygon: require('./RegularPolygon'),
   Star: require('./Star'),
-  RadialPolygon: require('./RadialPolygon'),
-  MirroredPolygon: require('./MirroredPolygon'),
+    Rectangle: require('./Rectangle'),
+    RegularPolygon: require('./RegularPolygon'),
+    RadialPolygon: require('./RadialPolygon'),
+    MirroredPolygon: require('./MirroredPolygon'),
+  EllipseSlice: require('./EllipseSlice'),
+    EllipseSlice: require('./EllipseSlice'),
+    Ellipse: require('./Ellipse'),
+    CircleSlice: require('./CircleSlice'),
+      Circle: require('./Circle'),
 };
