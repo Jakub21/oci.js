@@ -39,7 +39,7 @@ module.exports = class Vector {
     return this;
   }
   angle() {
-    return Math.atan2(this.y, this.x);
+    return -Math.atan2(this.y, this.x);
   }
   angleTo(next) {
     return new Vector(next.x-this.x, next.y-this.y).angle();

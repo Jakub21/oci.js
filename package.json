@@ -1,6 +1,6 @@
 {
   "name": "@jakub21/oci",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Object-oriented Canvas Inteface",
   "main": "index.js",
   "scripts": {

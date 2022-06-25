@@ -1,29 +1,62 @@
 const Vector = require('./Vector');
 
 module.exports = class Transform {
-  constructor(center, translate, rotate=0, scale=1) {
-    this.center = center;
+  // constructor(elm, translate, rotate=0, scale=1) {
+  constructor(elm, translate, scale=1, rotate=0) {
+    this.elm = elm;
     this.translate = translate || new Vector(0,0);
-    this.rotate = rotate;
     this.scale = scale;
-  }
-  recenter(vector) {
-    this.center = vector;
+    this.rotate = rotate
+    this.none = false;
   }
   toRel(vector) {
-    return vector.copy().sub(this.center);
+    if (this.none) return vector;
+    vector = this.elm.parent.trf.toRel(vector);
+    return vector.copy().sub(this.elm.offset); // TODO
   }
   toAbs(vector) {
-    return vector.copy().add(this.center);
+    if (this.none) return vector;
+    vector = this.elm.parent.trf.toAbs(vector);
+    return vector.copy().add(this.elm.offset); // TODO
   }
-  transform(vector) {
-    let rel = vector.copy().mult(this.scale);
-    rel.rotate(this.rotate).add(this.translate);
-    return rel;
+  transform(vector, r=0) {
+    vector = vector.copy();
+    if (this.none) return vector;
+    vector.mult(this.scale);
+    vector.add(this.translate);
+    vector.rotate(this.rotate);
+    vector.add(this.elm.offset);
+    vector = this.elm.parent.trf.transform(vector, r+1);
+    vector.sub(this.elm.offset);
+    return vector;
   }
   reverse(vector) {
-    let rel = vector.copy().sub(this.translate);
-    rel.rotate(-this.rotate).mult(1/this.scale);
+    if (this.none) return vector;
+    vector = this.elm.parent.trf.reverse(vector);
+    let rel = vector.copy();
+    rel.rotate(-this.rotate).sub(this.translate).mult(1/this.scale);
     return rel;
+  }
+  static None() {
+    const trf = new Transform();
+    trf.none = true;
+    return trf;
+  }
+  get0x() {
+    let or = this.toAbs(this.transform(new Vector(0,0)));
+    let ux = this.toAbs(this.transform(new Vector(0,1)));
+    return ux.copy().sub(or);
+  }
+  getTranslate() {
+    let d0x = this.get0x();
+    return d0x.add(this.elm.offset);
+  }
+  getRotate() {
+    let d0x = this.get0x();
+    return d0x.angle();
+  }
+  getScale() {
+    let d0x = this.get0x();
+    return d0x.mag();
   }
 }

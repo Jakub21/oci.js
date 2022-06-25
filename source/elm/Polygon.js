@@ -11,9 +11,7 @@ module.exports = class Polygon extends Element {
     this.triangles = this.triangulate();
   }
   draw(ctx) {
-    ctx.lineWidth = this.tex.lineWidth;
-    ctx.strokeStyle = this.tex.outline.getHex();
-    ctx.fillStyle = this.tex.fill.getHex();
+    this.tex.apply(ctx);
     let vertices = [];
     this.vertices.map(v => {
       vertices.push(this.trf.toAbs(this.trf.transform(v)))});
