@@ -7,7 +7,6 @@ module.exports = {
     RadialPolygon: require('./RadialPolygon'),
     MirroredPolygon: require('./MirroredPolygon'),
   EllipseSlice: require('./EllipseSlice'),
-    EllipseSlice: require('./EllipseSlice'),
     Ellipse: require('./Ellipse'),
     CircleSlice: require('./CircleSlice'),
       Circle: require('./Circle'),

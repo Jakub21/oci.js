@@ -10,6 +10,11 @@ module.exports = class Color {
   copy() {
     return new Color(this.r, this.g, this.b, this.a);
   }
+  apply(mode, ctx) {
+    if (mode == 'Fill') ctx.fillStyle = this.getHex();
+    else if (mode == 'Outline') ctx.strokeStyle = this.getHex();
+  }
+
   getHex() {
     if (this.none) return '#0000';
     let hexes = [this.r, this.g, this.b, this.a].map(c=>{return this.partHex(c)});

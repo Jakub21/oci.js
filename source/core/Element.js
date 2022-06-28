@@ -1,6 +1,6 @@
 let GENERATED_ID_IDX = 0;
 const Vector = require('./Vector');
-const Texture = require('./Texture');
+const Texture = require('../tex/Texture');
 const Transform = require('./Transform');
 const Box = require('./Box');
 
@@ -13,7 +13,7 @@ module.exports = class Element {
     this.offset = offset || new Vector(0,0);
     this.zIndex = zIndex || GENERATED_ID_IDX+1;
     this.trf = new Transform(this);
-    this.tex = new Texture();
+    this.tex = new Texture(this);
   }
   draw(ctx) {
     //
@@ -25,16 +25,16 @@ module.exports = class Element {
   attachDrawOnly(child) {
     this.parent.attachDrawOnly(child); // pass to CanvasInterface
   }
-  _drawCenter(ctx) {
-    ctx.fillStyle = '#FFF';
-    ctx.strokeStyle = '#000';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    let center = this.parent.trf.toAbs(this.offset);
-    ctx.arc(center.x, center.y, 5, 0, Math.PI*2);
-    ctx.fill();
-    ctx.stroke();
-  }
+  // _drawCenter(ctx) { // TODO
+  //   ctx.fillStyle = '#FFF';
+  //   ctx.strokeStyle = '#000';
+  //   ctx.lineWidth = 1;
+  //   ctx.beginPath();
+  //   let center = this.parent.trf.toAbs(this.offset);
+  //   ctx.arc(center.x, center.y, 5, 0, Math.PI*2);
+  //   ctx.fill();
+  //   ctx.stroke();
+  // }
   intersects(vector) {
     //
   }

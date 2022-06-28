@@ -2,7 +2,6 @@ const Element = require('../core/Element');
 const Box = require('../core/Box');
 const Triangle = require('../core/Triangle');
 const Line = require('../core/Line');
-const Color = require('../core/Color');
 
 module.exports = class Polygon extends Element {
   constructor(ci, pos, vertices, zIndex) {
@@ -11,38 +10,33 @@ module.exports = class Polygon extends Element {
     this.triangles = this.triangulate();
   }
   draw(ctx) {
-    this.tex.apply(ctx);
+    let path = new Path2D();
     let vertices = [];
     this.vertices.map(v => {
       vertices.push(this.trf.toAbs(this.trf.transform(v)))});
-    ctx.beginPath();
-    ctx.moveTo(...vertices.slice(-1)[0].get());
+    path.moveTo(...vertices.slice(-1)[0].get());
     for (let vertex of vertices) {
-      ctx.lineTo(...vertex.get());
+      path.lineTo(...vertex.get());
     }
-    ctx.fill();
-    if (this.tex.image != undefined) {
-      ctx.drawImage(this.tex.image, this.pos.x, this.pos.y); // TODO
-    }
-    ctx.stroke();
+    this.tex.draw(ctx, path);
     // this._drawCenter(ctx);
     // this.getBoxAbs().draw(ctx);
     // this._drawTriangles(ctx);
   }
-  _drawTriangles(ctx) {
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = '#0F0';
-    ctx.fillStyle = new Color(0, 255, 0, 30).getHex();//Color.None().getHex();
-    for (let tr of this.triangles) {
-      let a = this.trf.toAbs(this.trf.transform(tr.va));
-      let b = this.trf.toAbs(this.trf.transform(tr.vb));
-      let c = this.trf.toAbs(this.trf.transform(tr.vc));
-      ctx.beginPath(); ctx.moveTo(...c.get());
-      ctx.lineTo(...a.get());ctx.lineTo(...b.get());ctx.lineTo(...c.get());
-      ctx.stroke();
-      ctx.fill();
-    }
-  }
+  // _drawTriangles(ctx) { // TODO
+  //   ctx.lineWidth = 1;
+  //   ctx.strokeStyle = '#0F0';
+  //   ctx.fillStyle = '#0F02';
+  //   for (let tr of this.triangles) {
+  //     let a = this.trf.toAbs(this.trf.transform(tr.va));
+  //     let b = this.trf.toAbs(this.trf.transform(tr.vb));
+  //     let c = this.trf.toAbs(this.trf.transform(tr.vc));
+  //     ctx.beginPath(); ctx.moveTo(...c.get());
+  //     ctx.lineTo(...a.get());ctx.lineTo(...b.get());ctx.lineTo(...c.get());
+  //     ctx.stroke();
+  //     ctx.fill();
+  //   }
+  // }
   intersects(vector) {
     // Box check
     if (!this.getBoxAbs(this.vertices).intersects(vector)) return false;
