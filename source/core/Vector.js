@@ -21,6 +21,7 @@ module.exports = class Vector {
     return this;
   }
   mult(factor) {
+    if (factor == undefined) return;
     this.x *= factor;
     this.y *= factor;
     return this;

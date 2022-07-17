@@ -8,5 +8,6 @@ module.exports = {
   // styles
   Color: require('./Color'),
   Pattern: require('./Pattern'),
+  Image: require('./Image'),
   // + image and 3 gradient types
 }

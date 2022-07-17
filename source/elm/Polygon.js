@@ -11,13 +11,12 @@ module.exports = class Polygon extends Element {
   }
   draw(ctx) {
     let path = new Path2D();
-    let vertices = [];
-    this.vertices.map(v => {
-      vertices.push(this.trf.toAbs(this.trf.transform(v)))});
+    let vertices = [...this.vertices];
     path.moveTo(...vertices.slice(-1)[0].get());
     for (let vertex of vertices) {
       path.lineTo(...vertex.get());
     }
+    this.trf.apply(ctx);
     this.tex.draw(ctx, path);
     // this._drawCenter(ctx);
     // this.getBoxAbs().draw(ctx);
@@ -92,6 +91,11 @@ module.exports = class Polygon extends Element {
       }
     }
     return triangles;
+  }
+  getBoxRel() {
+    let box = Box.FromVerticesAbs(this.vertices);
+    // box.applyOutlineWidth(this.tex.lineWidth);
+    return box;
   }
   getBoxAbs() {
     let vertices = [];

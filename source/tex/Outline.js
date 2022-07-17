@@ -4,9 +4,9 @@ module.exports = class Outline extends Component {
   constructor(elm, style, lineWidth, lineCap, lineJoin) {
     super(elm);
     this.style = style;
-    this.lineWidth = lineWidth;
-    this.lineCap = lineCap;
-    this.lineJoin = lineJoin;
+    this.lineWidth = lineWidth || 1;
+    this.lineCap = lineCap || 'butt';
+    this.lineJoin = lineJoin || 'miter';
   }
   draw(ctx, path) {
     this.style.apply(this.constructor.name, ctx);

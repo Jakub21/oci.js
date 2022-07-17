@@ -1,62 +1,73 @@
 const Vector = require('./Vector');
+const Matrix = require('./Matrix');
+
+/*
+Transformation order (left to right)
+- anchor offset (position vector relative to the parent)
+- anchor rotation (rotates both element and anchor vector around the parent)
+- element offset (moves element away from the anchor)
+- element scale (scales the element (and element offset))
+- element rotation (rotates element around the anchor point)
+*/
 
 module.exports = class Transform {
-  // constructor(elm, translate, rotate=0, scale=1) {
-  constructor(elm, translate, scale=1, rotate=0) {
+  constructor(elm) {
     this.elm = elm;
-    this.translate = translate || new Vector(0,0);
-    this.scale = scale;
-    this.rotate = rotate
-    this.none = false;
-  }
-  toRel(vector) {
-    if (this.none) return vector;
-    vector = this.elm.parent.trf.toRel(vector);
-    return vector.copy().sub(this.elm.offset); // TODO
-  }
-  toAbs(vector) {
-    if (this.none) return vector;
-    vector = this.elm.parent.trf.toAbs(vector);
-    return vector.copy().add(this.elm.offset); // TODO
-  }
-  transform(vector, r=0) {
-    vector = vector.copy();
-    if (this.none) return vector;
-    vector.mult(this.scale);
-    vector.add(this.translate);
-    vector.rotate(this.rotate);
-    vector.add(this.elm.offset);
-    vector = this.elm.parent.trf.transform(vector, r+1);
-    vector.sub(this.elm.offset);
-    return vector;
-  }
-  reverse(vector) {
-    if (this.none) return vector;
-    vector = this.elm.parent.trf.reverse(vector);
-    let rel = vector.copy();
-    rel.rotate(-this.rotate).sub(this.translate).mult(1/this.scale);
-    return rel;
+    this._anchor = new Vector(0,0);
+    this._offset = new Vector(0,0);
+    this._scale = 1;
+    this._rotation = 0;
+    this.matrix = new Matrix();
+    this.dirty = false;
+    this.isNone = false;
   }
   static None() {
-    const trf = new Transform();
-    trf.none = true;
+    let trf = new Transform('<None>');
+    trf.isNone = true;
     return trf;
   }
-  get0x() {
-    let or = this.toAbs(this.transform(new Vector(0,0)));
-    let ux = this.toAbs(this.transform(new Vector(0,1)));
-    return ux.copy().sub(or);
+  // modifiers
+  move(delta) {this._anchor.add(delta); this.dirty = true;}
+  offset(delta) {this._offset.add(delta); this.dirty = true;}
+  scale(delta) {this._scale *= delta; this.dirty = true;}
+  rotate(delta) {this._rotation += delta; this.dirty = true;}
+  // setters
+  setPosition(other) {this._anchor = delta.copy(); this.dirty = true;}
+  setOffset(other) {this._offset = delta.copy(); this.dirty = true;}
+  setScale(other) {this._scale = other; this.dirty = true;}
+  setRotation(other) {this._rotation = other; this.dirty = true;}
+  // getters
+  getPosition() {return this.offset.copy();}
+  getOffset() {return this._offset.copy();}
+  getScale() {return this._scale;}
+  getRotation() {return this._rotation;}
+  // api
+  apply(ctx) {
+    let matrix = this.getAbsolute();
+    ctx.setTransform(...matrix.getDOMValues());
   }
-  getTranslate() {
-    let d0x = this.get0x();
-    return d0x.add(this.elm.offset);
+  transform(vector) {
+    let matrix = this.getMatrix();
+    return matrix.apply(vector);
   }
-  getRotate() {
-    let d0x = this.get0x();
-    return d0x.angle();
+  getMatrix() {
+    if (!this.dirty) {
+      return this.matrix;
+    }
+    let matrix = new Matrix();
+    matrix.mult(Matrix.Translation(this._offset));
+    matrix.mult(Matrix.Rotation(this._rotation));
+    matrix.mult(Matrix.Scaling(this._scale));
+    matrix.mult(Matrix.Translation(this._anchor));
+    this.matrix = matrix;
+    this.dirty = false;
+    return this.matrix;
   }
-  getScale() {
-    let d0x = this.get0x();
-    return d0x.mag();
+  getAbsolute(matrix=undefined) {
+    if (matrix == undefined) matrix = this.getMatrix().copy();
+    else matrix.mult(this.getMatrix());
+    if (this.isNone) return matrix;
+    let parent = this.elm.parent.trf;
+    return parent.getAbsolute(matrix);
   }
 }

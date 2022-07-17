@@ -7,6 +7,12 @@ module.exports = class Fill extends Component {
   }
   draw(ctx, path) {
     this.style.apply(this.constructor.name, ctx);
-    ctx.fill(path);
+    let fs_path = new Path2D();
+    fs_path.moveTo(-1920, -1080);
+    fs_path.lineTo(1920, -1080);
+    fs_path.lineTo(1920, 1080);
+    fs_path.lineTo(-1920, 1080);
+    fs_path.closePath();
+    ctx.fill(fs_path);
   }
 }
