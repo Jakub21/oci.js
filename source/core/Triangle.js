@@ -32,21 +32,4 @@ module.exports = class Triangle {
     }
     return this.intersects(vector);
   }
-  // intersects(q) {
-  //   return this.checkAngle(this.va, this.vb, this.vc, q) &&
-  //     this.checkAngle(this.vb, this.va, this.vc, q);
-  // }
-  // checkAngle(root, arm1, arm2, q) {
-  //   let alike = (angle, compare) => {
-  //     let convert = Math.abs(angle-compare) > Math.abs((angle+2*Math.PI)-compare);
-  //     if (convert) angle += 2*Math.PI;
-  //     return angle;
-  //   }
-  //   let angle1 = root.angleTo(arm1);
-  //   let angle2 = alike(root.angleTo(arm2), angle1);
-  //   let angleQ = alike(root.angleTo(q), angle1);
-  //   let descending = (angle1 >= angleQ) && (angleQ >= angle2);
-  //   let ascending = (angle2 >= angleQ) && (angleQ >= angle1);
-  //   return descending || ascending;
-  // }
 }

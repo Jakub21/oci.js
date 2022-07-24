@@ -19,23 +19,31 @@ module.exports = class Transform {
     this._rotation = 0;
     this.matrix = new Matrix();
     this.dirty = false;
-    this.isNone = false;
+    this.parent = undefined;
   }
-  static None() {
-    let trf = new Transform('<None>');
-    trf.isNone = true;
-    return trf;
+  setParent(trf) {
+    this.parent = trf;
+    return this;
+  }
+  set(anchor, offset, scale, rotation) {
+    this._anchor = anchor;
+    this._offset = offset;
+    this._scale = scale;
+    this._rotation = rotation;
+  }
+  get() {
+    return [this._anchor.copy(), this._offset.copy(), this._scale, this._rotation];
   }
   // modifiers
-  move(delta) {this._anchor.add(delta); this.dirty = true;}
-  offset(delta) {this._offset.add(delta); this.dirty = true;}
-  scale(delta) {this._scale *= delta; this.dirty = true;}
-  rotate(delta) {this._rotation += delta; this.dirty = true;}
+  move(delta) {this._anchor.add(delta); this.dirty = true; return this;}
+  offset(delta) {this._offset.add(delta); this.dirty = true; return this;}
+  scale(delta) {this._scale *= delta; this.dirty = true; return this;}
+  rotate(delta) {this._rotation += delta; this.dirty = true; return this;}
   // setters
-  setPosition(other) {this._anchor = delta.copy(); this.dirty = true;}
-  setOffset(other) {this._offset = delta.copy(); this.dirty = true;}
-  setScale(other) {this._scale = other; this.dirty = true;}
-  setRotation(other) {this._rotation = other; this.dirty = true;}
+  setPosition(other) {this._anchor = delta.copy(); this.dirty = true; return this;}
+  setOffset(other) {this._offset = delta.copy(); this.dirty = true; return this;}
+  setScale(other) {this._scale = other; this.dirty = true; return this;}
+  setRotation(other) {this._rotation = other; this.dirty = true; return this;}
   // getters
   getPosition() {return this.offset.copy();}
   getOffset() {return this._offset.copy();}
@@ -66,8 +74,7 @@ module.exports = class Transform {
   getAbsolute(matrix=undefined) {
     if (matrix == undefined) matrix = this.getMatrix().copy();
     else matrix.mult(this.getMatrix());
-    if (this.isNone) return matrix;
-    let parent = this.elm.parent.trf;
-    return parent.getAbsolute(matrix);
+    if (this.parent !== undefined) return this.parent.getAbsolute(matrix);
+    return matrix;
   }
 }

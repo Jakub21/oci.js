@@ -1,20 +1,5 @@
 const Vector = require('./Vector');
 
-class V3 extends Vector {
-  constructor(x, y, z) {
-    super(x, y);
-    this.z = z;
-  }
-  mult(factor) {
-    this.x *= factor; this.y *= factor; this.z *= factor;
-    return this;
-  }
-  add(other) {
-    this.x += other.x; this.y += other.y; this.z += other.z;
-    return this;
-  }
-}
-
 module.exports = class Matrix {
   constructor(values) {
     if (values !== undefined) {
@@ -41,9 +26,9 @@ module.exports = class Matrix {
     return new DOMMatrix(this.getDOMValues());
   }
   getUnits() {
-    let ih = new V3(this.values[0], this.values[1], this.values[2]);
-    let jh = new V3(this.values[3], this.values[4], this.values[5]);
-    let kh = new V3(this.values[6], this.values[7], this.values[8]);
+    let ih = new Vector(this.values[0], this.values[1], this.values[2]);
+    let jh = new Vector(this.values[3], this.values[4], this.values[5]);
+    let kh = new Vector(this.values[6], this.values[7], this.values[8]);
     return [ih, jh, kh];
   }
   mult(other) {
@@ -59,6 +44,9 @@ module.exports = class Matrix {
     let yy = jh.mult(vector.y);
     let zz = kh.mult(vector.z);
     return xx.add(yy).add(zz);
+  }
+  noAction() {
+    return this.values == [1,0,0, 0,1,0, 0,0,1]
   }
   static Translation(vector) {
     return new Matrix([1,0,0, 0,1,0, vector.x, vector.y, 1]);
