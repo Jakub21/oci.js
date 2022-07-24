@@ -2,9 +2,9 @@ const Polygon = require('./Polygon');
 const Vector = require('../core/Vector');
 
 module.exports = class Rectangle extends Polygon {
-  constructor(ci, pos, width, height, zIndex) {
+  constructor(ci, width, height, zIndex) {
     let vertices = Rectangle.generateVertices(width, height);
-    super(ci, pos, vertices, zIndex);
+    super(ci, vertices, zIndex);
     this.width = width;
     this.height = height;
   }

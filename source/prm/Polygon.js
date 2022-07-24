@@ -1,13 +1,14 @@
-const Element = require('../core/Element');
+const Primitive = require('./Primitive');
 const Box = require('../core/Box');
 const Triangle = require('../core/Triangle');
 const Line = require('../core/Line');
 
-module.exports = class Polygon extends Element {
-  constructor(ci, pos, vertices, zIndex) {
-    super(ci, pos, zIndex);
+module.exports = class Polygon extends Primitive {
+  constructor(ci, vertices, zIndex) {
+    super(ci, zIndex);
     this.vertices = vertices;
     this.triangles = this.triangulate();
+    this.box = Box.FromVertices(this.vertices);
   }
   draw(ctx) {
     let path = new Path2D();
@@ -16,26 +17,8 @@ module.exports = class Polygon extends Element {
     for (let vertex of vertices) {
       path.lineTo(...vertex.get());
     }
-    this.trf.apply(ctx);
-    this.tex.draw(ctx, path);
-    // this._drawCenter(ctx);
-    // this.getBoxAbs().draw(ctx);
-    // this._drawTriangles(ctx);
+    super.draw(ctx, path);
   }
-  // _drawTriangles(ctx) { // TODO
-  //   ctx.lineWidth = 1;
-  //   ctx.strokeStyle = '#0F0';
-  //   ctx.fillStyle = '#0F02';
-  //   for (let tr of this.triangles) {
-  //     let a = this.trf.toAbs(this.trf.transform(tr.va));
-  //     let b = this.trf.toAbs(this.trf.transform(tr.vb));
-  //     let c = this.trf.toAbs(this.trf.transform(tr.vc));
-  //     ctx.beginPath(); ctx.moveTo(...c.get());
-  //     ctx.lineTo(...a.get());ctx.lineTo(...b.get());ctx.lineTo(...c.get());
-  //     ctx.stroke();
-  //     ctx.fill();
-  //   }
-  // }
   intersects(vector) {
     // Box check
     if (!this.getBoxAbs(this.vertices).intersects(vector)) return false;
@@ -91,19 +74,5 @@ module.exports = class Polygon extends Element {
       }
     }
     return triangles;
-  }
-  getBoxRel() {
-    let box = Box.FromVerticesAbs(this.vertices);
-    // box.applyOutlineWidth(this.tex.lineWidth);
-    return box;
-  }
-  getBoxAbs() {
-    let vertices = [];
-    this.vertices.map(v => {
-      vertices.push(this.trf.toAbs(this.trf.transform(v)));
-    });
-    let box = Box.FromVerticesAbs(vertices);
-    // box.applyOutlineWidth(this.tex.lineWidth);
-    return box;
   }
 }

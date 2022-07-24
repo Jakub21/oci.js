@@ -2,9 +2,9 @@ const Polygon = require('./Polygon');
 const Vector = require('../core/Vector');
 
 module.exports = class RegularPolygon extends Polygon {
-  constructor(ci, pos, sides, radius, zIndex) {
+  constructor(ci, sides, radius, zIndex) {
     let vertices = RegularPolygon.generateVertices(sides, radius);
-    super(ci, pos, vertices, zIndex);
+    super(ci, vertices, zIndex);
     this.sides = sides;
   }
   static generateVertices(sides, radius) {

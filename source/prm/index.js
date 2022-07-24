@@ -1,5 +1,6 @@
 
 module.exports = {
+  Primitive: require('./Primitive'),
   Polygon: require('./Polygon'),
     Rectangle: require('./Rectangle'),
     RegularPolygon: require('./RegularPolygon'),

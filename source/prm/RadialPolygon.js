@@ -1,9 +1,9 @@
 const Polygon = require('./Polygon');
 
 module.exports = class RadialPolygon extends Polygon {
-  constructor(ci, pos, sections, sverts, zIndex) {
+  constructor(ci, sections, sverts, zIndex) {
     let vertices = RadialPolygon.generateVertices(sections, sverts);
-    super(ci, pos, vertices, zIndex);
+    super(ci, vertices, zIndex);
     this.sections = sections;
     this.sectionVertices = sverts;
   }

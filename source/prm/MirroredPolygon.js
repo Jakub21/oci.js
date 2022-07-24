@@ -1,9 +1,9 @@
 const Polygon = require('./Polygon');
 
 module.exports = class MirroredPolygon extends Polygon {
-  constructor(ci, pos, axis='y', sverts, zIndex) {
+  constructor(ci, axis='y', sverts, zIndex) {
     let vertices = MirroredPolygon.generateVertices(axis, sverts);
-    super(ci, pos, vertices, zIndex);
+    super(ci, vertices, zIndex);
     this.axis = axis;
     this.sectionVertices = sverts;
   }

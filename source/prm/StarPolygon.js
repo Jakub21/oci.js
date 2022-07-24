@@ -2,9 +2,9 @@ const Polygon = require('./Polygon');
 const Vector = require('../core/Vector');
 
 module.exports = class StarPolygon extends Polygon {
-  constructor(ci, pos, arms, radiusInner, radiusOuter, zIndex) {
+  constructor(ci, arms, radiusInner, radiusOuter, zIndex) {
     let vertices = StarPolygon.generateVertices(arms, radiusInner, radiusOuter);
-    super(ci, pos, vertices, zIndex);
+    super(ci, vertices, zIndex);
     this.arms = arms;
     this.radiusInner = radiusInner
     this.radiusOuter = radiusOuter

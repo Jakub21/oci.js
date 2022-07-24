@@ -1,10 +1,10 @@
 const Vector = require('../core/Vector');
-const Element = require('../core/Element');
+const Primitive = require('./Primitive');
 const Box = require('../core/Box');
 
-module.exports = class EllipseSlice extends Element {
-  constructor(ci, offset, radii, span, baseAngle=0, ccw=false, connectOrigin=true, zIndex) {
-    super(ci, offset, zIndex);
+module.exports = class EllipseSlice extends Primitive {
+  constructor(ci, radii, span, baseAngle=0, ccw=false, connectOrigin=true, zIndex) {
+    super(ci, zIndex);
     this.radii = radii;
     this.span = span;
     this.baseAngle = baseAngle;
@@ -16,7 +16,7 @@ module.exports = class EllipseSlice extends Element {
     let origin = this.parent.trf.toAbs(this.parent.trf.transform(this.offset)).add(this.trf.translate);
     let startAngle = this.baseAngle;
     let endAngle = (this.ccw)? startAngle-this.span : startAngle+this.span;
-    let unit = this.trf.transform(new Vector(1, 0)).sub(this.trf.transform(new Vector(0,0)));
+    let unit = this.trf.transform(Vector.UnitX()).sub(this.trf.transform(new Vector()));
     let radii = this.radii.copy().mult(unit.mag());
     path.ellipse(origin.x, origin.y, radii.x, radii.y, this.trf.rotate,
       startAngle, endAngle, this.ccw);
