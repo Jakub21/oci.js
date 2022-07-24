@@ -1,4 +1,3 @@
-// version 1.0.5
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 const DomiObject = require('./dobject/DomiObject');
 
@@ -56,21 +55,21 @@ module.exports = class DomiObject extends ObjectShpInsert {
 },{"./ObjectShpInsert":5,"./StyleManager":6}],3:[function(require,module,exports){
 
 module.exports = class ObjectHandles {
-  on(evtKey, cb) {
+  on(evtKey, cb, ...opts) {
     if (evtKey.constructor == Array) {
-      for (let k of evtKey) this.elm.addEventListener(k, cb);
+      for (let k of evtKey) this.elm.addEventListener(k, cb, ...opts);
     } else {
-      this.elm.addEventListener(evtKey, cb);
+      this.elm.addEventListener(evtKey, cb, ...opts);
     }
     return this;
   }
-  onk(evtKey, kb, kbKey, cb) {
-    this.on(evtKey, cb);
+  onk(evtKey, kb, kbKey, cb, ...opts) {
+    this.on(evtKey, cb, ...opts);
     kb.bind(kbKey, cb);
     return this;
   }
-  onkIns(evtKey, kb, kbKey, cb) {
-    this.on(evtKey, cb);
+  onkIns(evtKey, kb, kbKey, cb, ...opts) {
+    this.on(evtKey, cb, ...opts);
     kb.bindIns(kbKey, cb);
     return this;
   }
@@ -108,7 +107,7 @@ const ObjectInsert = require('./ObjectInsert');
 module.exports = class ObjectShpInsert extends ObjectInsert {
   constructor() {
     super();
-    try {this.compiler = new ShpCompiler()}
+    try {this.compiler = new shp.Compiler()}
     catch(err) {}
   }
 
@@ -169,6 +168,11 @@ module.exports = class StyleManager {
   }
   toggle(cc) {
     this.elm.classList.toggle(cc);
+    return this;
+  }
+  setAdded(cc, state) {
+    if (state) this.elm.classList.add(cc);
+    else this.elm.classList.remove(cc);
     return this;
   }
   choice(cc, allChoices) {
@@ -235,6 +239,7 @@ const _Toggle = require('./_Toggle');
 module.exports = class AnimHide extends _Toggle {
   constructor(elm, onClass, offClass, delay) {
     super(elm);
+    this.state = !elm.hidden;
     this.onClass = onClass;
     this.offClass = offClass;
     this.delay = delay * 1e3;
@@ -245,11 +250,13 @@ module.exports = class AnimHide extends _Toggle {
       this.elm._s.choice(this.onClass, [this.onClass, this.offClass]);
     }, this.delay);
     this.elm.prop({hidden:false});
+    return this;
   }
   off() {
     super.off();
     this.elm._s.choice(this.offClass, [this.onClass, this.offClass]);
     setTimeout(() => { this.elm.prop({hidden:true}); }, this.delay);
+    return this;
   }
 }
 
@@ -265,10 +272,12 @@ module.exports = class CssClass extends _Toggle {
   on() {
     super.on();
     this.elm._s.choice(this.onClass, [this.onClass, this.offClass]);
+    return this;
   }
   off() {
     super.off();
     this.elm._s.choice(this.offClass, [this.onClass, this.offClass]);
+    return this;
   }
 }
 
@@ -282,18 +291,21 @@ module.exports = class Group extends _Toggle {
   }
   add(toggle) {
     this.toggles.push(toggle);
+    return this;
   }
   on() {
     super.on();
     for (let toggle of this.toggles) {
       toggle.on();
     }
+    return this;
   }
   off() {
     super.off();
     for (let toggle of this.toggles) {
       toggle.off();
     }
+    return this;
   }
 }
 
@@ -330,16 +342,23 @@ module.exports = class SingleChoice {
   }
   enableOnDelay(seconds) {
     this.onDelay = seconds;
+    return this;
   }
   add(id, elm, ...options) {
     this.toggles[id] = new this._ToggleClass(elm,
       ...this.defaultOptions, ...options);
+    return this;
+  }
+  addToggle(id, toggle) {
+    this.toggles[id] = toggle;
+    return this;
   }
   goto(id) {
     if (this.current == id) return;
     if (this.onDelay) this._goto_delay(id);
     else this._goto_instant(id);
     this.current = id;
+    return this;
   }
   _goto_delay(id) {
     for (let [tid, toggle] of Object.entries(this.toggles)) {
