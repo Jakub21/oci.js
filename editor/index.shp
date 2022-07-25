@@ -1,0 +1,120 @@
+@doctype
+$html {
+  $head {
+    $title {OCI Editor}
+    %meta[charset utf-8]
+    %link[rel stylesheet href 'style.css']
+    $script[src 'lib/shp.js']
+    $script[src 'lib/Domi.js']
+    $script[src '../build/oci.js']
+    $script[src 'js/FpsMeter.js']
+    $script[src 'js/setup.js']
+    $script[src 'index.js']
+  }
+  $body[onload 'initialize();'] {
+    $div[.Menu #LeftPane] {
+      $div[.MenuSection] {
+        $h3 {Project}
+        $div[.Label] {$label[.FileInput] {
+          $span{Import...}
+          %input[#ProjectImport type file]
+          $span[.Value] {...}
+        }}
+        $div[.Label] {
+          $button[#BtnExport] {Export...}
+        }
+      }
+      $div[.MenuSection] {
+        $h3 {Add new complex}
+        $label{ $span{Add new}
+          %input[#NameNewComplex type text]
+        }
+      }
+      $div[.MenuSection] {
+        $h3 {Complex properties}
+        $div[.Label] {$span{Select complex to edit} $select[#ComplexSelect]}
+        $div[.Label] { $span{Complex anchor}
+          $button[#BtnCpxAnchorYDec] {^}
+          $button[#BtnCpxAnchorYInc] {v}
+          $button[#BtnCpxAnchorXDec] {<}
+          $button[#BtnCpxAnchorXInc] {>}
+          $span[#ValCpxAnchor .Value] {(0, 0)}
+        }
+        $div[.Label] { $span{Complex rotation}
+          $button[#BtnCpxRotDec] {<}
+          $button[#BtnCpxRotInc] {>}
+          $span[#ValCpxRotation .Value] {0 rad}
+        }
+        $div[.Label] { $span{Complex scale}
+          $button[#BtnCpxScaleDec] {v}
+          $button[#BtnCpxScaleInc] {^}
+          $span[#ValCpxScale .Value] {x1}
+        }
+      }
+      $div[.MenuSection] {
+        $h3 {Add new limb}
+        $label{ $span{Name}
+          %input[#NameNewLimb type text placeholder 'empty = ROOT']
+        }
+        $div[.Label] {$span{Select attachment} $select[#AttachmentSelect]}
+      }
+      $div[.MenuSection] {
+        $h3 {Limb properties}
+        $div[.Label] {$span{Select limb to edit} $select[#LimbSelect]}
+        $div[.Label] { $span{Image} $label[.FileInput] {
+          $span{Import...}
+          %input[#ImageImport type file]
+          $span[.Value] {...}
+        }}
+        $div[.Label] {$span{Scale}
+          $button[#BtnLimbScaleInc] {v}
+          $button[#BtnLimbScaleDec] {^}
+          $span[#ValLimbScale .Value] {x1}
+        }
+      }
+      $div[.MenuSection] {
+        $h3 {Joint properties}
+        $div[.Label] {$span{Joint anchor}
+          $button[#BtnJointAnchorYDec] {^}
+          $button[#BtnJointAnchorYInc] {v}
+          $button[#BtnJointAnchorXDec] {<}
+          $button[#BtnJointAnchorXInc] {>}
+          $span[#ValJointAnchor .Value] {(0, 0)}
+        }
+        $div[.Label] {$span{Joint offset}
+          $button[#BtnJointOffsetYDec] {^}
+          $button[#BtnJointOffsetYInc] {v}
+          $button[#BtnJointOffsetXDec] {<}
+          $button[#BtnJointOffsetXInc] {>}
+          $span[#ValJointOffset .Value] {(0, 0)}
+        }
+        $div[.Label] {$span{Joint rotation}
+          $button[#BtnJointRotationDec] {<}
+          $button[#BtnJointRotationInc] {>}
+          $span[#ValJointRotation .Value] {0 rad}
+        }
+      }
+    }
+    $div[.Menu #RightPane] {
+      $div[.MenuSection] {
+        $h3 {Precision}
+        $div[.Label] {$span{Movement}
+          $button[#BtnEditorStepMoveInc] {^}
+          $button[#BtnEditorStepMoveDec] {v}
+          $span[#ValEditorStepMove .Value] {}
+        }
+        $div[.Label] {$span{Scale}
+          $button[#BtnEditorStepScaleInc] {^}
+          $button[#BtnEditorStepScaleDec] {v}
+          $span[#ValEditorStepScale .Value] {}
+        }
+        $div[.Label] {$span{Rotation}
+          $button[#BtnEditorStepRotInc] {^}
+          $button[#BtnEditorStepRotDec] {v}
+          $span[#ValEditorStepRotate .Value] {}
+        }
+      }
+    }
+    $canvas[#Canvas]
+  }
+}

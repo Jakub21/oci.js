@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300&display=swap');
+
+$burgundyA: #3F141A;
+$burgundyB: #722430;
+$blue: #66AAFF;
+
+@import "style/download";
+
+html, body {
+  background-color: #111;
+  color: #FFF;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  overflow: hidden;
+}
+
+body {
+  font-size: 0.75rem;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 300;
+  width: 100%; height: 100%;
+}
+
+canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: .033em;
+  font-weight: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a, input, button, select {
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+}
+
+input, select {
+  background: #FFFC;
+  border: none;
+}
+
+input, select, button, a, label.FileInput {
+  outline: 0 solid $blue;
+  &:focus, &:focus-within {
+    outline-width: 1px;
+  }
+}
+
+button, .Button, label.FileInput {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: .15em .5em;
+  background-color: $burgundyA;
+  transition: all .3s ease;
+  color: #FFF;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    background-color: $burgundyB;
+  }
+  margin-right: 3px;
+}
+
+
+.Menu {
+  z-index: 5;
+  position: relative;
+  background-color: #555;
+  .MenuSection {
+    background-color: #333;
+    padding: .2em;
+    margin-bottom: .2em;
+  }
+}
+#LeftPane {
+  float: left;
+  max-width: 40%;
+}
+#RightPane {
+  float: right;
+  max-width: 40%;
+}
+
+div.Label, label {
+  display: block;
+  margin: .25em;
+  padding: .25em;
+  background-color: #FFF1;
+  span {
+    margin-right: .5em;
+  }
+  &.FileInput {
+    padding-right: 0;
+    margin: 0;
+    span {margin-right: 0;}
+    input[type=file] {
+      opacity: 0; position: absolute; top: -100%;
+    }
+  }
+}
+
+h3 {
+  color: $blue;
+  margin: .5em 0;
+}
+
+.Value {
+  font-family: monospace;
+  background-color: #0008;
+  padding: .1em;
+  margin-left: .5em;
+}
