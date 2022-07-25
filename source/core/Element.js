@@ -11,6 +11,10 @@ module.exports = class Element {
     this.trf = new Transform(this);
     this.trf.setParent(this.parent.trf);
   }
+  generateData() { return {
+    zIndex: this.zIndex,
+    transform: this.trf.generateData(),
+  }}
   self() {return this;} // NOTE
   generateID() {
     const now = Date.now().toString(16).toUpperCase();

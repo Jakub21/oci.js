@@ -7,6 +7,11 @@ module.exports = class Primitive extends Element {
     this.tex = new Texture(this);
     // this.box = ...
   }
+  generateData() {
+    let data = super.generateData();
+    data.tex = this.tex.generateData();
+    return data;
+  }
   draw(ctx, path) {
     // create a path in a subclass.draw and then call this method
     this.trf.apply(ctx);

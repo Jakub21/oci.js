@@ -1,7 +1,7 @@
 const Element = require('../core/Element');
 const Joint = require('./Joint');
 
-module.exports = class Complex extends Element {
+class Complex extends Element {
   constructor(ci) {
     super(ci);
     this.limbs = {};
@@ -14,8 +14,6 @@ module.exports = class Complex extends Element {
       self:()=>{return this;},
       attach:(prm)=>{
         this.limbs[ID] = prm;
-        // let parent = (parentID==undefined)? this : this.limbs[parentID];
-        // if (parent==undefined) throw 'Ivalid joint parent';
         this.joints[ID] = new Joint(this, prm, parentID);
       },
     }};
@@ -24,10 +22,27 @@ module.exports = class Complex extends Element {
     return this.joints[limbID];
   }
   draw(ctx) {
+    if (this._root == undefined) return;
     this._root.draw(ctx);
     for (let [key, joint] of Object.entries(this.joints)) {
       joint.update();
       this.limbs[key].draw(ctx);
     }
   }
+  generateData() {
+    let data = super.generateData();
+    data.root = this._root.generateData();
+    data.limbs = [];
+    for (let [ID, limb] of Object.entries(this.limbs)) {
+      let joint = this.joints[ID];
+      data.limbs.push({ID, limb:limb.generateData(), joint:joint.generateData()});
+    };
+    return data;
+  }
+  static Import(parent, cpxData) {
+    let cpx = new Complex(parent);
+    console.log(cpxData);
+    return cpx;
+  }
 }
+module.exports = Complex;

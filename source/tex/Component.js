@@ -4,6 +4,9 @@ module.exports = class Component {
     elm.tex.components.push(this);
     this.elm = elm;
   }
+  generateData() {return {
+    err: `${this.constructor.name} not implemented`,
+  }}
   draw(ctx, path) {
     //
   }

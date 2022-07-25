@@ -9,6 +9,9 @@ module.exports = class ImageFill extends Component {
     this.image = $.make('img').prop({src:this.path});
     this.matrix = matrix || new Matrix();
   }
+  generateData() { return {
+    img: this.image.elm.src,
+  }}
   transform(other) {
     this.matrix.mult(other);
   }

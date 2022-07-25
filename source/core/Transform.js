@@ -21,6 +21,13 @@ module.exports = class Transform {
     this.dirty = false;
     this.parent = undefined;
   }
+  generateData() {
+    return {
+      anchor: [this._anchor.x, this._anchor.y],
+      offset: [this._offset.x, this._offset.y],
+      scale: this._scale, rotation: this._rotation,
+    }
+  }
   setParent(trf) {
     this.parent = trf;
     return this;
@@ -38,6 +45,7 @@ module.exports = class Transform {
   move(delta) {this._anchor.add(delta); this.dirty = true; return this;}
   offset(delta) {this._offset.add(delta); this.dirty = true; return this;}
   scale(delta) {this._scale *= delta; this.dirty = true; return this;}
+  scaleAdd(delta) {this._scale += delta; this.dirty = true; return this;}
   rotate(delta) {this._rotation += delta; this.dirty = true; return this;}
   // setters
   setPosition(other) {this._anchor = delta.copy(); this.dirty = true; return this;}
