@@ -30,7 +30,7 @@ class Editor extends oci.CanvasInterface {
     this.steps = {
       movement: 10,
       scale: 0.05,
-      rotation: Math.PI/25,
+      rotation: Math.PI/12,
     };
     this.selected = {
       cpx: undefined, limb: undefined, joint: undefined

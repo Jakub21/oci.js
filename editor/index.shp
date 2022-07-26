@@ -25,27 +25,31 @@ $html {
         }
       }
       $div[.MenuSection] {
-        $h3 {Add new complex}
-        $label{ $span{Add new}
+        $h3 {Add new object}
+        $label{ $span{Name}
           %input[#NameNewComplex type text]
         }
+        $button[#BtnNewComplex .Confirm] {Confirm}
       }
       $div[.MenuSection] {
-        $h3 {Complex properties}
-        $div[.Label] {$span{Select complex to edit} $select[#ComplexSelect]}
-        $div[.Label] { $span{Complex anchor}
+        $h3 {Object properties}
+        $div[.Label] {$span{Select an object to edit} $select[#ComplexSelect]}
+        $div[.Label] { $span{Anchor}
           $button[#BtnCpxAnchorYDec] {^}
           $button[#BtnCpxAnchorYInc] {v}
           $button[#BtnCpxAnchorXDec] {<}
           $button[#BtnCpxAnchorXInc] {>}
           $span[#ValCpxAnchor .Value] {(0, 0)}
+          $div[.Label] {
+            $button[#BtnCpxAnchorCenter] {Recenter}
+          }
         }
-        $div[.Label] { $span{Complex rotation}
+        $div[.Label] { $span{Rotation}
           $button[#BtnCpxRotDec] {<}
           $button[#BtnCpxRotInc] {>}
           $span[#ValCpxRotation .Value] {0 rad}
         }
-        $div[.Label] { $span{Complex scale}
+        $div[.Label] { $span{Scale}
           $button[#BtnCpxScaleDec] {v}
           $button[#BtnCpxScaleInc] {^}
           $span[#ValCpxScale .Value] {x1}
@@ -54,13 +58,14 @@ $html {
       $div[.MenuSection] {
         $h3 {Add new limb}
         $label{ $span{Name}
-          %input[#NameNewLimb type text placeholder 'empty = ROOT']
+          %input[#NameNewLimb type text]
         }
-        $div[.Label] {$span{Select attachment} $select[#AttachmentSelect]}
+        $div[.Label] {$span{Attachment limb} $select[#AttachmentSelect]}
+        $button[#BtnNewLimb .Confirm] {Confirm}
       }
       $div[.MenuSection] {
         $h3 {Limb properties}
-        $div[.Label] {$span{Select limb to edit} $select[#LimbSelect]}
+        $div[.Label] {$span{Select a limb to edit} $select[#LimbSelect]}
         $div[.Label] { $span{Image} $label[.FileInput] {
           $span{Import...}
           %input[#ImageImport type file]
@@ -74,21 +79,21 @@ $html {
       }
       $div[.MenuSection] {
         $h3 {Joint properties}
-        $div[.Label] {$span{Joint anchor}
+        $div[.Label] {$span{Anchor}
           $button[#BtnJointAnchorYDec] {^}
           $button[#BtnJointAnchorYInc] {v}
           $button[#BtnJointAnchorXDec] {<}
           $button[#BtnJointAnchorXInc] {>}
           $span[#ValJointAnchor .Value] {(0, 0)}
         }
-        $div[.Label] {$span{Joint offset}
+        $div[.Label] {$span{Offset}
           $button[#BtnJointOffsetYDec] {^}
           $button[#BtnJointOffsetYInc] {v}
           $button[#BtnJointOffsetXDec] {<}
           $button[#BtnJointOffsetXInc] {>}
           $span[#ValJointOffset .Value] {(0, 0)}
         }
-        $div[.Label] {$span{Joint rotation}
+        $div[.Label] {$span{Rotation}
           $button[#BtnJointRotationDec] {<}
           $button[#BtnJointRotationInc] {>}
           $span[#ValJointRotation .Value] {0 rad}

@@ -96,15 +96,29 @@ button:hover, .Button:hover, label.FileInput:hover {
   background-color: #722430;
 }
 
+.Confirm {
+  position: absolute;
+  top: 0.25em;
+  right: 0.25em;
+  margin: 0.25em;
+  padding: 0.25em;
+}
+
 .Menu {
   z-index: 5;
   position: relative;
   background-color: #555;
 }
 .Menu .MenuSection {
+  position: relative;
   background-color: #333;
   padding: 0.2em;
   margin-bottom: 0.2em;
+}
+.Menu .MenuSection::after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
 #LeftPane {

@@ -9,6 +9,13 @@ let getScaleStr = (f) => {
   return `x${Math.round(f*1e4)/1e4}`;
 }
 
+let getCenterVector = (editor) => {
+  let canvas = editor.canvas;
+  return new oci.Vector(
+    canvas.clientWidth/2-(canvas.clientWidth/2)%editor.steps.movement,
+    canvas.clientHeight/2-(canvas.clientHeight/2)%editor.steps.movement);
+}
+
 let setupImport = (editor) => {
   let input = $.get('#ProjectImport');
   input.prop({accept: '.json'}).on('input', (evt) => {
@@ -45,11 +52,11 @@ let setupExport = (editor) => {
 
 let setupEditorValues = (editor) => {
   $.get('#BtnEditorStepMoveInc').on('click', () => {
-    editor.steps.movement += 1;
+    editor.steps.movement += 2;
     updateEditorValues(editor);
   });
   $.get('#BtnEditorStepMoveDec').on('click', () => {
-    editor.steps.movement -= 1;
+    editor.steps.movement -= 2;
     updateEditorValues(editor);
   });
   $.get('#BtnEditorStepScaleInc').on('click', () => {
@@ -61,11 +68,11 @@ let setupEditorValues = (editor) => {
     updateEditorValues(editor);
   });
   $.get('#BtnEditorStepRotInc').on('click', () => {
-    editor.steps.rotation += Math.PI/50;
+    editor.steps.rotation += Math.PI/48;
     updateEditorValues(editor);
   });
   $.get('#BtnEditorStepRotDec').on('click', () => {
-    editor.steps.rotation -= Math.PI/50;
+    editor.steps.rotation -= Math.PI/48;
     updateEditorValues(editor);
   });
   updateEditorValues(editor);
@@ -79,18 +86,19 @@ let updateEditorValues = (editor) => {
 
 let setupComplexEditor = (editor) => {
   let cpxInput = $.get('#NameNewComplex');
-  cpxInput.on('keydown', (evt) => {
-    if (evt.key != 'Enter') return;
+  $.get('#BtnNewComplex').on('click', () => {
     let name = cpxInput.elm.value;
     if (name in Object.keys(editor.named)) {
       alert('Complex name already taken');
       return;
     }
     let complex = new oci.cpx.Complex(editor);
-    let canvas = editor.canvas;
-    complex.trf.move(new oci.Vector(canvas.clientWidth/2, canvas.clientHeight/2));
+    complex.trf.move(getCenterVector(editor));
     editor.assignNamed(name, complex);
     $.get('#ComplexSelect').append($.make('option').prop({innerText:name})).prop({value:name}).elm.dispatchEvent(new Event('change'));
+    // create a root
+    createNewLimb(editor, '', '');
+    $.get('#AttachmentSelect').prop({value:'ROOT'}).elm.dispatchEvent(new Event('change'));
   });
 
   $.get('#ComplexSelect').on('change', (evt) => {
@@ -107,6 +115,10 @@ let setupComplexEditor = (editor) => {
     updateLimbSelector(editor);
   });
 
+  $.get('#BtnCpxAnchorCenter').on('click', () => {
+    editor.selected.cpx.trf.setPosition(getCenterVector(editor));
+    updateComplexValues(editor);
+  });
   $.get('#BtnCpxAnchorYDec').on('click', () => {
     editor.selected.cpx.trf.move(oci.Vector.UnitY().mult(-editor.steps.movement));
     updateComplexValues(editor);
@@ -149,7 +161,6 @@ let updateComplexValues = (editor) => {
 }
 
 let updateLimbSelector = (editor) => {
-  console.log('updateLimbSelector', editor.selected.cpx);
   $.get('#AttachmentSelect').empty();
   $.get('#LimbSelect').empty();
   let complex = editor.selected.cpx;
@@ -177,41 +188,36 @@ let updateLimbValues = (editor) => {
   $.get('#ValJointRotation').prop({innerText: getRotStr(joint.target._rotation)});
 }
 
-let setupLimbEditor = (c) => {
+let createNewLimb = (editor, limbName, parent) => {
+  let complex = editor.selected.cpx;
+  if (complex == undefined) {
+    alert('Invalid complex selected, cannot add a limb');
+    return;
+  }
+  let handle = (limbName == '')? complex.root : complex.limb(limbName, parent);
+  let prm = new oci.prm.Rectangle(handle, 100, 100);
+  new oci.tex.Outline(prm, new oci.tex.Color(150, 255, 150, 100));
+  new oci.tex.JointAnchor(prm);
+  if (limbName == '') limbName = 'ROOT';
+  $.get('#LimbSelect').append($.make('option').prop({innerText: limbName
+  })).prop({value:limbName}).elm.dispatchEvent(new Event('change'));
+  $.get('#AttachmentSelect').append($.make('option').prop({innerText: limbName}));
+}
+
+let setupLimbEditor = (editor) => {
   let limbInput = $.get('#NameNewLimb');
-  limbInput.on('keydown', (evt) => {
-    if (evt.key != 'Enter') return;
-    console.log('enter new limb');
-    let complex = editor.selected.cpx;
-    if (complex == undefined) {
-      alert('Invalid complex selected, cannot add a limb');
+  $.get('#BtnNewLimb').on('click', () => {
+    let limbName = limbInput.elm.value;
+    let parent = $.get('#AttachmentSelect').elm.value;
+    if (limbName == '') {
+      alert('Limb needs to have a name');
       return;
     }
-    let limbName = limbInput.elm.value;
-    let prm;
-    if (limbName == '') {
-      prm = new oci.prm.Rectangle(complex.root, 100, 100);
-      limbName = 'ROOT';
-    } else {
-      if (complex._root == undefined) {
-        alert('Can not add a named limb to a complex that has no root yet');
-        return;
-      }
-      let parent = $.get('#AttachmentSelect').elm.value;
-      prm = new oci.prm.Rectangle(complex.limb(limbName, parent), 100, 100);
-    }
-    new oci.tex.Outline(prm, new oci.tex.Color(150, 255, 150, 100));
-    new oci.tex.JointAnchor(prm);
-    $.get('#LimbSelect').append($.make('option').prop({innerText: limbName
-    })).prop({value:limbName}).elm.dispatchEvent(new Event('change'));
-    $.get('#AttachmentSelect').append($.make('option').prop({innerText: limbName}));
-    if (limbName == 'ROOT')
-      $.get('#AttachmentSelect').prop({value:limbName}).elm.dispatchEvent(new Event('change'));
+    createNewLimb(editor, limbName, parent);
   });
 
   $.get('#LimbSelect').on('change', (evt) => {
     let name = $.get('#LimbSelect').elm.value;
-    console.log('Editing limb', name);
     let complex = editor.selected.cpx;
     if (complex == undefined) {
       alert('Limb selection error: Select valid complex first');

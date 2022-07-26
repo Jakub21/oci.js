@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300&display=swap');
 
+@mixin clearfix {
+  &::after {
+    content: ""; display: block; clear: both;
+  }
+}
+
 $burgundyA: #3F141A;
 $burgundyB: #722430;
 $blue: #66AAFF;
@@ -75,15 +81,24 @@ button, .Button, label.FileInput {
   margin-right: 3px;
 }
 
+.Confirm {
+  position: absolute;
+  top: .25em; right: .25em;
+  margin: .25em;
+  padding: .25em;
+}
+
 
 .Menu {
   z-index: 5;
   position: relative;
   background-color: #555;
   .MenuSection {
+    position: relative;
     background-color: #333;
     padding: .2em;
     margin-bottom: .2em;
+    @include clearfix;
   }
 }
 #LeftPane {
