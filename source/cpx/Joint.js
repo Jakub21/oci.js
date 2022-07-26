@@ -24,6 +24,11 @@ module.exports = class Joint {
   update() {
     // TEMP FOR EXPERIMENTING
     this.limb.trf.setParent(this.current);
+    if (this.cpx.parent.settings.instantSnap) {
+      this.current.set(...this.target.get());
+      this.current.dirty = true;
+      return;
+    }
     for (let prop of ['_anchor', '_offset']) {
       const stepDefault = 1.5;
       for (let dim of ['x', 'y']) {
