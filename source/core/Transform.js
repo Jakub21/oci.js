@@ -48,10 +48,10 @@ module.exports = class Transform {
   scaleAdd(delta) {this._scale += delta; this.dirty = true; return this;}
   rotate(delta) {this._rotation += delta; this.dirty = true; return this;}
   // setters
-  setPosition(other) {this._anchor = delta.copy(); this.dirty = true; return this;}
-  setOffset(other) {this._offset = delta.copy(); this.dirty = true; return this;}
-  setScale(other) {this._scale = other; this.dirty = true; return this;}
-  setRotation(other) {this._rotation = other; this.dirty = true; return this;}
+  setPosition(vector) {this._anchor = vector.copy(); this.dirty = true; return this;}
+  setOffset(vector) {this._offset = vector.copy(); this.dirty = true; return this;}
+  setScale(value) {this._scale = value; this.dirty = true; return this;}
+  setRotation(value) {this._rotation = value; this.dirty = true; return this;}
   // getters
   getPosition() {return this.offset.copy();}
   getOffset() {return this._offset.copy();}
