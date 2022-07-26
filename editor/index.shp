@@ -14,17 +14,6 @@ $html {
   $body[onload 'initialize();'] {
     $div[.Menu #LeftPane] {
       $div[.MenuSection] {
-        $h3 {Project}
-        $div[.Label] {$label[.FileInput] {
-          $span{Import...}
-          %input[#ProjectImport type file]
-          $span[.Value] {...}
-        }}
-        $div[.Label] {
-          $button[#BtnExport] {Export...}
-        }
-      }
-      $div[.MenuSection] {
         $h3 {Add new object}
         $label{ $span{Name}
           %input[#NameNewComplex type text]
@@ -50,8 +39,8 @@ $html {
           $span[#ValCpxRotation .Value] {0 rad}
         }
         $div[.Label] { $span{Scale}
-          $button[#BtnCpxScaleDec] {v}
           $button[#BtnCpxScaleInc] {^}
+          $button[#BtnCpxScaleDec] {v}
           $span[#ValCpxScale .Value] {x1}
         }
       }
@@ -72,8 +61,8 @@ $html {
           $span[.Value] {...}
         }}
         $div[.Label] {$span{Scale}
-          $button[#BtnLimbScaleInc] {v}
           $button[#BtnLimbScaleDec] {^}
+          $button[#BtnLimbScaleInc] {v}
           $span[#ValLimbScale .Value] {x1}
         }
       }
@@ -102,6 +91,17 @@ $html {
     }
     $div[.Menu #RightPane] {
       $div[.MenuSection] {
+        $h3 {Project}
+        $div[.Label] {$label[.FileInput] {
+          $span{Import...}
+          %input[#ProjectImport type file]
+          $span[.Value] {...}
+        }}
+        $div[.Label] {
+          $button[#BtnExport] {Export...}
+        }
+      }
+      $div[.MenuSection] {
         $h3 {Precision}
         $div[.Label] {$span{Movement}
           $button[#BtnEditorStepMoveInc] {^}
@@ -117,6 +117,12 @@ $html {
           $button[#BtnEditorStepRotInc] {^}
           $button[#BtnEditorStepRotDec] {v}
           $span[#ValEditorStepRotate .Value] {}
+        }
+      }
+      $div[.MenuSection] {
+        $h3 {Animation}
+        $label {$span {Instant snap to target}
+          %input[#BtnAnimInstantSnap type checkbox]
         }
       }
     }

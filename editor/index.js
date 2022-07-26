@@ -32,6 +32,9 @@ class Editor extends oci.CanvasInterface {
       scale: 0.05,
       rotation: Math.PI/12,
     };
+    this.settings = {
+      instantSnap: false,
+    };
     this.selected = {
       cpx: undefined, limb: undefined, joint: undefined
     }

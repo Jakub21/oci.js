@@ -155,7 +155,7 @@ div.Label.FileInput input[type=file], label.FileInput input[type=file] {
 
 h3 {
   color: #66AAFF;
-  margin: 0.5em 0;
+  margin: 0.5em 0.25em;
 }
 
 .Value {

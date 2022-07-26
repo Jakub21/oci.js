@@ -52,11 +52,11 @@ let setupExport = (editor) => {
 
 let setupEditorValues = (editor) => {
   $.get('#BtnEditorStepMoveInc').on('click', () => {
-    editor.steps.movement += 2;
+    editor.steps.movement += 1;
     updateEditorValues(editor);
   });
   $.get('#BtnEditorStepMoveDec').on('click', () => {
-    editor.steps.movement -= 2;
+    editor.steps.movement -= 1;
     updateEditorValues(editor);
   });
   $.get('#BtnEditorStepScaleInc').on('click', () => {
@@ -75,6 +75,10 @@ let setupEditorValues = (editor) => {
     editor.steps.rotation -= Math.PI/48;
     updateEditorValues(editor);
   });
+  $.get('#BtnAnimInstantSnap').on('change', (evt) => {
+    editor.settings.instantSnap = evt.target.checked;
+    updateEditorValues(editor);
+  });
   updateEditorValues(editor);
 }
 
@@ -82,6 +86,7 @@ let updateEditorValues = (editor) => {
   $.get('#ValEditorStepMove').prop({innerText: editor.steps.movement});
   $.get('#ValEditorStepScale').prop({innerText: getScaleStr(editor.steps.scale)});
   $.get('#ValEditorStepRotate').prop({innerText: getRotStr(editor.steps.rotation)});
+  $.get('#BtnAnimInstantSnap').prop({checked:editor.settings.instantSnap});
 }
 
 let setupComplexEditor = (editor) => {
@@ -89,7 +94,11 @@ let setupComplexEditor = (editor) => {
   $.get('#BtnNewComplex').on('click', () => {
     let name = cpxInput.elm.value;
     if (name in Object.keys(editor.named)) {
-      alert('Complex name already taken');
+      alert('Object name already taken');
+      return;
+    }
+    if (name == '') {
+      alert('Object needs to have a name');
       return;
     }
     let complex = new oci.cpx.Complex(editor);
