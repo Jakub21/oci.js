@@ -7,7 +7,6 @@ module.exports = class Joint {
     this.limb = limb;
     this._parentKey = parent;
     parent = this.cpx.getJoint(parent);
-    console.log(this._parentKey, parent);
     this.current = new Transform(this).setParent((parent==undefined)?
       this.cpx.trf : parent.current);
     this.target = new Transform(this);

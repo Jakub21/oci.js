@@ -19,10 +19,8 @@ let getCenterVector = (editor) => {
 let setupImport = (editor) => {
   let input = $.get('#ProjectImport');
   input.prop({accept: '.json'}).on('input', (evt) => {
-    console.log('change', evt);
     const reader = new FileReader();
     reader.addEventListener('load', (event) => {
-      console.log(JSON.parse(event.target.result).data);
       editor.importData(JSON.parse(event.target.result).data);
     });
     reader.readAsText(evt.target.files[0]);
@@ -112,8 +110,6 @@ let setupComplexEditor = (editor) => {
 
   $.get('#ComplexSelect').on('change', (evt) => {
     let name = $.get('#ComplexSelect').elm.value;
-    console.log('Editing', name);
-    console.log(editor.named);
     let complex = editor.named[name];
     if (complex == undefined) {
       alert('Complex selection error');
@@ -253,7 +249,6 @@ let setupLimbEditor = (editor) => {
       new oci.tex.Outline(limb, new oci.tex.Color(150, 255, 150, 100));
       imf.image.on('load', (evt) => {
         let size = new oci.Vector(imf.image.elm.naturalWidth, imf.image.elm.naturalHeight);
-        console.log('size', size);
         limb.vertices = [];
         limb.vertices.push(new oci.Vector(size.x/2, size.y/2));
         limb.vertices.push(new oci.Vector(-size.x/2, size.y/2));
