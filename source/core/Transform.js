@@ -23,9 +23,9 @@ module.exports = class Transform {
   }
   generateData() {
     return {
-      anchor: [this._anchor.x, this._anchor.y],
-      offset: [this._offset.x, this._offset.y],
-      scale: this._scale, rotation: this._rotation,
+      a: [this._anchor.x, this._anchor.y],
+      o: [this._offset.x, this._offset.y],
+      s: this._scale, r: this._rotation,
     }
   }
   setParent(trf) {

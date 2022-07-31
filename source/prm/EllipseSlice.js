@@ -33,4 +33,12 @@ module.exports = class EllipseSlice extends Primitive {
     // TODO
     // return new Box(min.x, min.y, max.x, max.y);
   }
+  generateData() {
+    let data = super.generateData();
+    data.type = 'Slice';
+    data.shape = {r:[this.radii.x, this.radii.y], s:this.span,
+      b:this.baseAngle, c:this.ccw, o:this.connectOrigin,
+    };
+    return data;
+  }
 }

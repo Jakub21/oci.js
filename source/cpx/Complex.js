@@ -31,11 +31,12 @@ class Complex extends Element {
   }
   generateData() {
     let data = super.generateData();
-    data.root = this._root.generateData();
-    data.limbs = [];
+    data.ID = this._editorName;
+    data._R = this._root.generateData();
+    data._Ls = [];
     for (let [ID, limb] of Object.entries(this.limbs)) {
       let joint = this.joints[ID];
-      data.limbs.push({ID, limb:limb.generateData(), joint:joint.generateData()});
+      data._Ls.push({ID, L:limb.generateData(), J:joint.generateData()});
     };
     return data;
   }

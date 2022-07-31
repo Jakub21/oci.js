@@ -75,4 +75,10 @@ module.exports = class Polygon extends Primitive {
     }
     return triangles;
   }
+  generateData() {
+    let data = super.generateData();
+    data.type = 'Polygon';
+    data.vertices = this.vertices.map(v=>{return [v.x, v.y]});
+    return data;
+  }
 }

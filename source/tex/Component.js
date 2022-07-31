@@ -5,7 +5,7 @@ module.exports = class Component {
     this.elm = elm;
   }
   generateData() {return {
-    err: `${this.constructor.name} not implemented`,
+    type: `${this.constructor.name}`,
   }}
   draw(ctx, path) {
     //

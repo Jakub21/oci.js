@@ -12,8 +12,8 @@ module.exports = class Element {
     this.trf.setParent(this.parent.trf);
   }
   generateData() { return {
-    zIndex: this.zIndex,
-    transform: this.trf.generateData(),
+    Z: this.zIndex,
+    TRF: this.trf.generateData(),
   }}
   self() {return this;} // NOTE
   generateID() {
