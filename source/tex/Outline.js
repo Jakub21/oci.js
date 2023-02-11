@@ -1,6 +1,6 @@
-const Component = require('./Component');
+import Component from './Component.js';
 
-module.exports = class Outline extends Component {
+export default class Outline extends Component {
   constructor(elm, style, lineWidth, lineCap, lineJoin) {
     super(elm);
     this.style = style;

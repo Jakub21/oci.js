@@ -1,7 +1,7 @@
-const Polygon = require('./Polygon');
-const Vector = require('../core/Vector');
+import Polygon from './Polygon.js';
+import Vector from '../core/Vector.js';
 
-module.exports = class Rectangle extends Polygon {
+export default class Rectangle extends Polygon {
   constructor(ci, width, height, zIndex) {
     let vertices = Rectangle.generateVertices(width, height);
     super(ci, vertices, zIndex);

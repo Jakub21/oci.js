@@ -1,6 +1,6 @@
-const Component = require('./Component');
+import Component from './Component.js';
 
-module.exports = class Shadow extends Component {
+export default class Shadow extends Component {
   constructor(elm, style, offset, blur) {
     super(elm);
     this.style = style;

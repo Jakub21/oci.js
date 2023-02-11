@@ -1,5 +1,5 @@
-const Vector = require('./Vector');
-const Matrix = require('./Matrix');
+import Vector from './Vector.js';
+import Matrix from './Matrix.js';
 
 /*
 Transformation order (left to right)
@@ -10,7 +10,7 @@ Transformation order (left to right)
 - element rotation (rotates element around the anchor point)
 */
 
-module.exports = class Transform {
+export default class Transform {
   constructor(elm) {
     this.elm = elm;
     this._anchor = new Vector(0,0);

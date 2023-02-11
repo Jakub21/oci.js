@@ -1,8 +1,6 @@
-const Vector = require('../core/Vector');
-
 // TODO: Make sure the pattern is created after image is loaded
 
-module.exports = class Pattern {
+export default class Pattern {
   constructor(path, repeat='repeat') {
     this.repeat = repeat;
     this.ready = false;

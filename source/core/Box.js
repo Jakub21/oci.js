@@ -1,5 +1,5 @@
 
-module.exports = class Box {
+export default class Box {
   constructor(xmin, ymin, xmax, ymax) {
     this.xmin = xmin;
     this.ymin = ymin;

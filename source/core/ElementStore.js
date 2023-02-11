@@ -1,5 +1,5 @@
 
-module.exports = class ElementStore {
+export default class ElementStore {
   constructor(ci) {
     this.ci = ci;
     this.elements = [];

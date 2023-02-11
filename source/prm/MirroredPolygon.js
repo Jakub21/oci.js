@@ -1,6 +1,6 @@
-const Polygon = require('./Polygon');
+import Polygon from './Polygon.js';
 
-module.exports = class MirroredPolygon extends Polygon {
+export default class MirroredPolygon extends Polygon {
   constructor(ci, axis='y', sverts, zIndex) {
     let vertices = MirroredPolygon.generateVertices(axis, sverts);
     super(ci, vertices, zIndex);

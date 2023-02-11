@@ -1,6 +1,5 @@
 
-window.oci = require('./source/core');
-window.oci.prm = require('./source/prm');
-window.oci.tex = require('./source/tex');
-window.oci.cpx = require('./source/cpx');
-// window.oci.ctrl = require('./source/ctrl');
+export * as core from './source/core/_index.js';
+export * as prm from './source/prm/_index.js';
+export * as tex from './source/tex/_index.js';
+export * as cpx from './source/cpx/_index.js';

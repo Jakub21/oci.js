@@ -1,6 +1,6 @@
-const Vector = require('./Vector');
+import Vector from './Vector.js';
 
-module.exports = class Matrix {
+export default class Matrix {
   constructor(values) {
     if (values !== undefined) {
       if (values.length != 9 || values.constructor != Array) {

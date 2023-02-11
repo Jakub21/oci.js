@@ -1,8 +1,8 @@
-const Component = require('./Component');
+import Component from './Component.js';
 
 // TODO
 
-module.exports = class BoundingBox extends Component {
+export default class BoundingBox extends Component {
   constructor(elm, style, radius=5) {
     super(elm);
     this.elm = elm;

@@ -1,7 +1,7 @@
-const Element = require('../core/Element');
-const Texture = require('../tex/Texture');
+import Element from '../core/Element.js';
+import Texture from '../tex/Texture.js';
 
-module.exports = class Primitive extends Element {
+export default class Primitive extends Element {
   constructor(parent, zIndex) {
     super(parent, zIndex);
     this.tex = new Texture(this);

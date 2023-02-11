@@ -1,6 +1,6 @@
-const Polygon = require('./Polygon');
+import Polygon from './Polygon.js';
 
-module.exports = class RadialPolygon extends Polygon {
+export default class RadialPolygon extends Polygon {
   constructor(ci, sections, sverts, zIndex) {
     let vertices = RadialPolygon.generateVertices(sections, sverts);
     super(ci, vertices, zIndex);

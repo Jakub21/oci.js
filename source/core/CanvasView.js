@@ -1,6 +1,6 @@
-const Vector = require('./Vector');
+import Vector from './Vector.js';
 
-module.exports = class CanvasView {
+export default class CanvasView {
   constructor(ci) {
     this.ci = ci;
     this.translation = new Vector();

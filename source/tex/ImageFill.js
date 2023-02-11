@@ -1,8 +1,7 @@
-const Vector = require('../core/Vector');
-const Matrix = require('../core/Matrix');
-const Component = require('./Component');
+import Matrix from '../core/Matrix.js';
+import Component from './Component.js';
 
-module.exports = class ImageFill extends Component {
+export default class ImageFill extends Component {
   constructor(elm, path, matrix) {
     super(elm);
     this.path = path;

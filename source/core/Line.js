@@ -1,6 +1,5 @@
-const Vector = require('./Vector');
 
-module.exports = class Line {
+export default class Line {
   constructor(va, vb) {
     this.va = va;
     this.vb = vb;

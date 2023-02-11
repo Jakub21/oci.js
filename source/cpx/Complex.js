@@ -1,7 +1,7 @@
-const Element = require('../core/Element');
-const Joint = require('./Joint');
+import Element from '../core/Element.js';
+import Joint from './Joint.js';
 
-class Complex extends Element {
+export default class Complex extends Element {
   constructor(ci) {
     super(ci);
     this.limbs = {};
@@ -46,4 +46,3 @@ class Complex extends Element {
     return cpx;
   }
 }
-module.exports = Complex;

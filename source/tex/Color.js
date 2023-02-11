@@ -1,5 +1,5 @@
 
-module.exports = class Color {
+export default class Color {
   constructor(r=0, g=0, b=0, a=255) {
     this.r = Math.round(r);
     this.g = Math.round(g);

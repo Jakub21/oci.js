@@ -1,7 +1,7 @@
-const Polygon = require('./Polygon');
-const Vector = require('../core/Vector');
-
-module.exports = class StarPolygon extends Polygon {
+import Polygon from './Polygon.js';
+import Vector from '../core/Vector.js';
+  
+export default class StarPolygon extends Polygon {
   constructor(ci, arms, radiusInner, radiusOuter, zIndex) {
     let vertices = StarPolygon.generateVertices(arms, radiusInner, radiusOuter);
     super(ci, vertices, zIndex);
