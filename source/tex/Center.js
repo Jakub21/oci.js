@@ -1,7 +1,7 @@
-const Component = require('./Component');
-const Vector = require('../core/Vector');
+import Component from './Component.js';
+import Vector from '../core/Vector.js';
 
-module.exports = class Center extends Component {
+export default class Center extends Component {
   constructor(elm, radius=10) {
     super(elm);
     this.elm = elm;

@@ -1,7 +1,6 @@
-const Transform = require('../core/Transform');
-const Vector = require('../core/Vector');
+import Transform from '../core/Transform.js';
 
-module.exports = class Joint {
+export default class Joint {
   constructor(cpx, limb, parent) {
     this.cpx = cpx;
     this.limb = limb;

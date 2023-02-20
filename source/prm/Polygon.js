@@ -1,9 +1,9 @@
-const Primitive = require('./Primitive');
-const Box = require('../core/Box');
-const Triangle = require('../core/Triangle');
-const Line = require('../core/Line');
+import Primitive from './Primitive.js';
+import Box from '../core/Box.js';
+import Triangle from '../core/Triangle.js';
+import Line from '../core/Line.js';
 
-module.exports = class Polygon extends Primitive {
+export default class Polygon extends Primitive {
   constructor(ci, vertices, zIndex) {
     super(ci, zIndex);
     this.vertices = vertices;

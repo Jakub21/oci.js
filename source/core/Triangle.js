@@ -1,8 +1,7 @@
 // not an element subclass; used for checking vector-face intersections
-const Vector = require('./Vector');
-const Line = require('./Line');
+import Line from './Line.js';
 
-module.exports = class Triangle {
+export default class Triangle {
   constructor(a, b, c) {
     this.va = a.copy();
     this.vb = b.copy();

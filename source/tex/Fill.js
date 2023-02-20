@@ -1,6 +1,6 @@
-const Component = require('./Component');
+import Component from './Component.js';
 
-module.exports = class Fill extends Component {
+export default class Fill extends Component {
   constructor(elm, style) {
     super(elm);
     this.style = style;

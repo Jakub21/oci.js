@@ -1,5 +1,5 @@
 
-module.exports = class Texture {
+export default class Texture {
   constructor(elm) {
     this.elm = elm;
     this.components = [];

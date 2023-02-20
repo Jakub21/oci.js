@@ -1,6 +1,6 @@
-const Component = require('./Component');
+import Component from './Component.js';
 
-module.exports = class Triangles extends Component {
+export default class Triangles extends Component {
   constructor(elm, style, radius=5) {
     super(elm);
     this.elm = elm;

@@ -1,8 +1,7 @@
-const Vector = require('../core/Vector');
-const Primitive = require('./Primitive');
-const Box = require('../core/Box');
+import Vector from '../core/Vector.js';
+import Primitive from './Primitive.js';
 
-module.exports = class EllipseSlice extends Primitive {
+export default class EllipseSlice extends Primitive {
   constructor(ci, radii, span, baseAngle=0, ccw=false, connectOrigin=true, zIndex) {
     super(ci, zIndex);
     this.radii = radii;
