@@ -1,7 +1,7 @@
-const Polygon = require('./Polygon');
-const Vector = require('../core/Vector');
+import Polygon from './Polygon.js';
+import Vector from '../core/Vector.js';
 
-module.exports = class RegularPolygon extends Polygon {
+export default class RegularPolygon extends Polygon {
   constructor(ci, sides, radius, zIndex) {
     let vertices = RegularPolygon.generateVertices(sides, radius);
     super(ci, vertices, zIndex);

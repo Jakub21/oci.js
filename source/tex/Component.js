@@ -1,5 +1,5 @@
 
-module.exports = class Component {
+export default class Component {
   constructor(elm) {
     elm.tex.components.push(this);
     this.elm = elm;

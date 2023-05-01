@@ -1,8 +1,7 @@
 let GENERATED_ID_IDX = 0;
-const Vector = require('./Vector');
-const Transform = require('./Transform');
+import Transform from './Transform.js';
 
-module.exports = class Element {
+export default class Element {
   constructor(parent, zIndex) {
     parent.attach(this);
     this.parent = parent.self(); // NOTE

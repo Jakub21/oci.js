@@ -1,8 +1,6 @@
-const Component = require('./Component');
-const Vector = require('../core/Vector');
-const Matrix = require('../core/Matrix');
+import Component from './Component.js';
 
-module.exports = class JointAnchor extends Component {
+export default class JointAnchor extends Component {
   constructor(elm, radius=8) {
     super(elm);
     this.elm = elm;

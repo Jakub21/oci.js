@@ -1,8 +1,8 @@
-const CanvasView = require('./CanvasView');
-const ElementStore = require('./ElementStore');
-const Transform = require('./Transform');
+import CanvasView from './CanvasView.js';
+import ElementStore from './ElementStore.js';
+import Transform from './Transform.js';
 
-module.exports = class CanvasInterface {
+export default class CanvasInterface {
   constructor(canvas) {
     this.canvas = canvas;
     this.view = new CanvasView(this);
