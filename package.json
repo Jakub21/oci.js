@@ -7,7 +7,7 @@
   "scripts": {
     "build": "browserify ./webIndex.js -o ./build/oci.js -v",
     "watch": "watchify ./webIndex.js -o ./build/oci.js -v",
-    "test": "node --experimental-vm-modules C:/Users/Disk/AppData/Roaming/npm/node_modules/jest/bin/jest.js --config D:/Code/Repositories/Canvas-App/jest.config.js --testMatch D:/Code/Repositories/Canvas-App/tests/** "
+    "test": "node --no-warnings --experimental-vm-modules C:/Users/Disk/AppData/Roaming/npm/node_modules/jest/bin/jest.js --config D:/Code/Repositories/Canvas-App/jest.config.js --testMatch D:/Code/Repositories/Canvas-App/tests/** "
   },
   "author": "Jakub21",
   "license": "ISC",
