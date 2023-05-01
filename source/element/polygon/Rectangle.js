@@ -1,5 +1,5 @@
 import Polygon from './Polygon.js';
-import Vector from '../core/Vector.js';
+import Vector from '../../geometry/Vector.js';
 
 export default class Rectangle extends Polygon {
   constructor(ci, width, height, zIndex) {

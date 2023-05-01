@@ -1,7 +1,7 @@
-import Primitive from './Primitive.js';
-import Box from '../core/Box.js';
-import Triangle from '../core/Triangle.js';
-import Line from '../core/Line.js';
+import Primitive from '../Primitive.js';
+import Box from '../../geometry/Box.js';
+import Triangle from '../../geometry/Triangle.js';
+import Line from '../../geometry/Line.js';
 
 export default class Polygon extends Primitive {
   constructor(ci, vertices, zIndex) {

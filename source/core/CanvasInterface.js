@@ -1,6 +1,6 @@
 import CanvasView from './CanvasView.js';
 import ElementStore from './ElementStore.js';
-import Transform from './Transform.js';
+import Transform from '../geometry/Transform.js';
 
 export default class CanvasInterface {
   constructor(canvas) {

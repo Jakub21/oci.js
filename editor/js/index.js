@@ -1,6 +1,9 @@
+import * as oci from '../../oci.js';
+import * as setup from './setup.js';
+
 let editor, KEYBOARD;
 
-class ImageRect extends oci.prm.Polygon {
+class ImageRect extends oci.elm.poly.Polygon {
   constructor(ci, path, scale=1) {
     super(ci, [new oci.Vector()]);
     this.trf.scale(scale);
@@ -23,7 +26,7 @@ class ImageRect extends oci.prm.Polygon {
   }
 }
 
-class Editor extends oci.CanvasInterface {
+class Editor extends oci.core.CanvasInterface {
   constructor(canvas) {
     super(canvas.elm);
     this.meter = new FpsMeter();
@@ -39,11 +42,11 @@ class Editor extends oci.CanvasInterface {
       cpx: undefined, limb: undefined, joint: undefined
     }
     this.named = {};
-    setupImport(this);
-    setupExport(this);
-    setupEditorValues(this);
-    setupComplexEditor(this);
-    setupLimbEditor(this);
+    setup.setupImport(this);
+    setup.setupExport(this);
+    setup.setupEditorValues(this);
+    setup.setupComplexEditor(this);
+    setup.setupLimbEditor(this);
     requestAnimationFrame(() => {this.update()});
   }
   assignNamed(name, cpx) {
@@ -69,7 +72,7 @@ class Editor extends oci.CanvasInterface {
   }
 }
 
-let initialize = () => {
+window.onload = () => {
   KEYBOARD = new $.Keyboard();
   editor = new Editor($.get('#Canvas'));
 }

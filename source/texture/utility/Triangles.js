@@ -1,4 +1,4 @@
-import Component from './Component.js';
+import Component from '../Component.js';
 
 export default class Triangles extends Component {
   constructor(elm, style, radius=5) {

@@ -1,4 +1,4 @@
-import Component from './Component.js';
+import Component from '../Component.js';
 
 export default class JointAnchor extends Component {
   constructor(elm, radius=8) {
