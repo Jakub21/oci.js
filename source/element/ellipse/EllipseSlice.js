@@ -1,5 +1,5 @@
-import Vector from '../core/Vector.js';
-import Primitive from './Primitive.js';
+import Vector from '../../geometry/Vector.js';
+import Primitive from '../Primitive.js';
 
 export default class EllipseSlice extends Primitive {
   constructor(ci, radii, span, baseAngle=0, ccw=false, connectOrigin=true, zIndex) {

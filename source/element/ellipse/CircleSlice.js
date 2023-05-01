@@ -1,5 +1,5 @@
 import EllipseSlice from './EllipseSlice.js';
-import Vector from '../core/Vector.js';
+import Vector from '../../geometry/Vector.js';
 
 export default class CircleSlice extends EllipseSlice {
   constructor(ci, radius, span, baseAngle, ccw, connectOrigin, zIndex) {

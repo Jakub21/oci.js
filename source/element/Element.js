@@ -1,5 +1,5 @@
 let GENERATED_ID_IDX = 0;
-import Transform from './Transform.js';
+import Transform from '../geometry/Transform.js';
 
 export default class Element {
   constructor(parent, zIndex) {

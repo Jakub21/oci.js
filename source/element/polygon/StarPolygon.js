@@ -1,5 +1,5 @@
 import Polygon from './Polygon.js';
-import Vector from '../core/Vector.js';
+import Vector from '../../geometry/Vector.js';
   
 export default class StarPolygon extends Polygon {
   constructor(ci, arms, radiusInner, radiusOuter, zIndex) {

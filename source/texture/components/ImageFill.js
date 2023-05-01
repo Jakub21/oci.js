@@ -1,5 +1,5 @@
-import Matrix from '../core/Matrix.js';
-import Component from './Component.js';
+import Matrix from '../../geometry/Matrix.js';
+import Component from '../Component.js';
 
 export default class ImageFill extends Component {
   constructor(elm, path, matrix) {

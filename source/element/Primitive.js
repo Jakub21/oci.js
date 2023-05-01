@@ -1,5 +1,5 @@
-import Element from '../core/Element.js';
-import Texture from '../tex/Texture.js';
+import Element from './Element.js';
+import Texture from '../texture/Texture.js';
 
 export default class Primitive extends Element {
   constructor(parent, zIndex) {

@@ -1,4 +1,4 @@
-import Transform from '../core/Transform.js';
+import Transform from '../../geometry/Transform.js';
 
 export default class Joint {
   constructor(cpx, limb, parent) {

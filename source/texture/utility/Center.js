@@ -1,5 +1,5 @@
-import Component from './Component.js';
-import Vector from '../core/Vector.js';
+import Component from '../Component.js';
+import Vector from '../../geometry/Vector.js';
 
 export default class Center extends Component {
   constructor(elm, radius=10) {
