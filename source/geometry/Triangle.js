@@ -1,4 +1,4 @@
-// not an element subclass; used for checking vector-face intersections
+// not a shape subclass; used for checking vector-face intersections
 import Line from './Line.js';
 
 export default class Triangle {

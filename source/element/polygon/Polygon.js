@@ -1,84 +1,33 @@
-import Primitive from '../Primitive.js';
-import Box from '../../geometry/Box.js';
-import Triangle from '../../geometry/Triangle.js';
-import Line from '../../geometry/Line.js';
+import Shape from '../Shape.js';
+import Vector from "../../geometry/Vector.js";
 
-export default class Polygon extends Primitive {
-  constructor(ci, vertices, zIndex) {
-    super(ci, zIndex);
-    this.vertices = vertices;
-    this.triangles = this.triangulate();
-    this.box = Box.FromVertices(this.vertices);
+export default class Polygon extends Shape {
+  validatePolygon(params) {
+    if (params.vertices == undefined) {
+      throw "Cannot create a polygon with out defining the vertices";
+    }
+    if (params.vertices.length < 3) {
+      throw "Cannot create a polygon with less than 3 vertices";
+    }
+    if (params.vertices.map(v => {return v instanceof Vector}).includes(false)) {
+      throw "Cannot create a polygon if at least one vertex is not instance of oci Vector";
+    }
+    // TODO check if the edges intersect each other
   }
-  draw(ctx) {
+  initialize(params) {
+    this.validatePolygon(params);
+    this.vertices = params.vertices;
+    // TODO bounding box
+    // TODO triangulate
+    super.initialize();
+  }
+  generatePath() {
     let path = new Path2D();
-    let vertices = [...this.vertices];
-    path.moveTo(...vertices.slice(-1)[0].get());
-    for (let vertex of vertices) {
+    path.moveTo(...this.vertices[0].get());
+    for (let vertex of this.vertices.slice(1)) {
       path.lineTo(...vertex.get());
     }
-    super.draw(ctx, path);
-  }
-  intersects(vector) {
-    // Box check
-    if (!this.getBoxAbs(this.vertices).intersects(vector)) return false;
-    // Triangles
-    vector = this.trf.reverse(this.trf.toRel(vector));
-    return this.triangles.map(t => {
-      return t.intersects(vector)}).includes(true);
-  }
-  triangulate() {
-    const sign = (n) => {if (!n) return 0; return (n>0)? 1 : -1;};
-    // Create edges
-    let edges = [];
-    for (let idx=0; idx<this.vertices.length; idx++) {
-      let line = new Line(this.vertices[idx],
-        this.vertices[idx+1] || this.vertices[0]);
-      edges.push(line);
-    }
-    this.edges = edges;
-    // Find vertices direction
-    // let total = 0;
-    // edges.map((line, idx) => {
-    //   let next = edges[idx+1] || edges[0];
-    //   total += line.angleTo(next);
-    // });
-    // console.log('total', total);
-    let total = 1;
-    // Find valid triangles
-    let threshold = this.vertices.length ** 3;
-    let triangles = [];
-    let vertices = this.vertices.slice();
-    let lidx = 0;
-    while (vertices.length) {
-      if (lidx == threshold) {
-        console.error('Emergency break');
-        break;
-      }
-      lidx += 1;
-      for (let idx=0; idx<vertices.length; idx++) {
-        let va = vertices[idx];
-        let vb = vertices[(idx+1) % vertices.length];
-        let vc = vertices[(idx+2) % vertices.length];
-        let tr = new Triangle(va, vb, vc);
-        let valid = true;
-        for (let v of this.vertices) {
-          if (v == va || v == vb || v == vc) continue;
-          if (tr.intersects2(v)) { valid = false; break; }
-        }
-        if (!valid) continue;
-        let angleSign = new Line(va, vb).angleSignTo(vc);
-        if ((angleSign != sign(total)) && (angleSign != 0)) continue;
-        vertices = vertices.filter(v=>{return v != vb}); // TODO
-        if (!tr.zeroArea()) triangles.push(tr);
-      }
-    }
-    return triangles;
-  }
-  generateData() {
-    let data = super.generateData();
-    data.type = 'Polygon';
-    data.vertices = this.vertices.map(v=>{return [v.x, v.y]});
-    return data;
+    path.lineTo(...this.vertices[0].get());
+    return path;
   }
 }

@@ -6,7 +6,7 @@ let editor, KEYBOARD;
 class ImageRect extends oci.elm.poly.Polygon {
   constructor(ci, path, scale=1) {
     super(ci, [new oci.Vector()]);
-    this.trf.scale(scale);
+    this.trnf.scale(scale);
     this.imf = new oci.tex.ImageFill(this, path);
     new oci.tex.Outline(this, new oci.tex.Color(150, 255, 150, 100));
     // new oci.tex.Center(this);

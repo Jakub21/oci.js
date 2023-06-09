@@ -2,8 +2,8 @@ import Matrix from '../../geometry/Matrix.js';
 import Component from '../Component.js';
 
 export default class ImageFill extends Component {
-  constructor(elm, path, matrix) {
-    super(elm);
+  constructor(path, matrix) {
+    super();
     this.path = path;
     this.image = $.make('img').prop({src:this.path});
     this.matrix = matrix || new Matrix();

@@ -15,12 +15,10 @@ export default class CanvasInterface {
   self() {return this;} // NOTE
   update() {
     this.view.updateSize();
-    this.elements.drawAll();
+    const ctx = this.canvas.getContext('2d');
+    this.elements.draw(ctx);
   }
   attach(element) {
-    this.elements.add(element);
-  }
-  getInterface() {
-    return this;
+    this.elements.attach(element);
   }
 }

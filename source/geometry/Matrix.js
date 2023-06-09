@@ -1,5 +1,8 @@
 import Vector from './Vector.js';
 
+const NO_TRANSFORM_VALUES = [1,0,0, 0,1,0, 0,0,1];
+
+
 export default class Matrix {
   constructor(values) {
     if (values !== undefined) {
@@ -7,7 +10,7 @@ export default class Matrix {
         throw 'Matrix error: Only arrays of length 9 are accepted'; }
       this.values = values;
     }
-    else this.values = [1,0,0, 0,1,0, 0,0,1];
+    else this.values = NO_TRANSFORM_VALUES;
     // 0 3 6
     // 1 4 7
     // 2 5 8
@@ -46,7 +49,10 @@ export default class Matrix {
     return xx.add(yy).add(zz);
   }
   noAction() {
-    return this.values == [1,0,0, 0,1,0, 0,0,1]
+    return this.values == NO_TRANSFORM_VALUES;
+  }
+  reset() {
+    this.values = NO_TRANSFORM_VALUES;
   }
   static Translation(vector) {
     return new Matrix([1,0,0, 0,1,0, vector.x, vector.y, 1]);

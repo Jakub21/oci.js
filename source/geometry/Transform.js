@@ -1,25 +1,15 @@
 import Vector from './Vector.js';
 import Matrix from './Matrix.js';
 
-/*
-Transformation order (left to right)
-- anchor offset (position vector relative to the parent)
-- anchor rotation (rotates both element and anchor vector around the parent)
-- element offset (moves element away from the anchor)
-- element scale (scales the element (and element offset))
-- element rotation (rotates element around the anchor point)
-*/
 
 export default class Transform {
-  constructor(elm) {
-    this.elm = elm;
-    this._anchor = new Vector(0,0);
-    this._offset = new Vector(0,0);
-    this._scale = 1;
-    this._rotation = 0;
+  constructor(ax=0, ay=0, ox=0, oy=0, s=1, r=0) {
+    this._anchor = new Vector(ax, ay);
+    this._offset = new Vector(ox, oy);
+    this._scale = s;
+    this._rotation = r;
     this.matrix = new Matrix();
-    this.dirty = false;
-    this.parent = undefined;
+    this.dirty = true;
   }
   generateData() {
     return {
@@ -28,39 +18,83 @@ export default class Transform {
       s: this._scale, r: this._rotation,
     }
   }
-  setParent(trf) {
-    this.parent = trf;
-    return this;
-  }
   set(anchor, offset, scale, rotation) {
     this._anchor = anchor;
     this._offset = offset;
     this._scale = scale;
     this._rotation = rotation;
+    this.dirty = true;
   }
   get() {
     return [this._anchor.copy(), this._offset.copy(), this._scale, this._rotation];
   }
+
   // modifiers
-  move(delta) {this._anchor.add(delta); this.dirty = true; return this;}
-  offset(delta) {this._offset.add(delta); this.dirty = true; return this;}
-  scale(delta) {this._scale *= delta; this.dirty = true; return this;}
-  scaleAdd(delta) {this._scale += delta; this.dirty = true; return this;}
-  rotate(delta) {this._rotation += delta; this.dirty = true; return this;}
+  move(delta) {
+    this._anchor.add(delta);
+    this.dirty = true;
+    return this;
+  }
+  offset(delta) {
+    this._offset.add(delta);
+    this.dirty = true;
+    return this;
+  }
+  scale(delta) {
+    this._scale *= delta;
+    this.dirty = true;
+    return this;
+  }
+  scaleAdd(delta) {
+    this._scale += delta;
+    this.dirty = true;
+    return this;
+  }
+  rotate(delta) {
+    this._rotation += delta;
+    this.dirty = true;
+    return this;
+  }
+
   // setters
-  setPosition(vector) {this._anchor = vector.copy(); this.dirty = true; return this;}
-  setOffset(vector) {this._offset = vector.copy(); this.dirty = true; return this;}
-  setScale(value) {this._scale = value; this.dirty = true; return this;}
-  setRotation(value) {this._rotation = value; this.dirty = true; return this;}
+  setPosition(vector) {
+    this._anchor = vector.copy();
+    this.dirty = true;
+    return this;
+  }
+  setOffset(vector) {
+    this._offset = vector.copy();
+    this.dirty = true;
+    return this;
+  }
+  setScale(value) {
+    this._scale = value;
+    this.dirty = true;
+    return this;
+  }
+  setRotation(value) {
+    this._rotation = value;
+    this.dirty = true;
+    return this;
+  }
+
   // getters
-  getPosition() {return this.offset.copy();}
-  getOffset() {return this._offset.copy();}
-  getScale() {return this._scale;}
-  getRotation() {return this._rotation;}
+  getPosition() {
+    return this.offset.copy();
+  }
+  getOffset() {
+    return this._offset.copy();
+  }
+  getScale() {
+    return this._scale;
+  }
+  getRotation() {
+    return this._rotation;
+  }
+
   // api
   apply(ctx) {
-    let matrix = this.getAbsolute();
-    ctx.setTransform(...matrix.getDOMValues());
+    ctx.transform(...this.getMatrix().getDOMValues());
   }
   transform(vector) {
     let matrix = this.getMatrix();
@@ -78,11 +112,5 @@ export default class Transform {
     this.matrix = matrix;
     this.dirty = false;
     return this.matrix;
-  }
-  getAbsolute(matrix=undefined) {
-    if (matrix == undefined) matrix = this.getMatrix().copy();
-    else matrix.mult(this.getMatrix());
-    if (this.parent !== undefined) return this.parent.getAbsolute(matrix);
-    return matrix;
   }
 }

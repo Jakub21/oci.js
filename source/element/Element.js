@@ -1,32 +1,31 @@
-let GENERATED_ID_IDX = 0;
 import Transform from '../geometry/Transform.js';
+import {generateUID} from '../core/common.js';
+import ElementStore from '../core/ElementStore.js'
+import Texture from '../texture/Texture.js';
+import Shape from './shapeFactory.js';
+
+let NEXT_Z_IDX = 0;
+
 
 export default class Element {
-  constructor(parent, zIndex) {
+  constructor(parent, zIndex=0, shape, tex, trnf) {
+    this.parent = parent;
     parent.attach(this);
-    this.parent = parent.self(); // NOTE
-    this.id = this.generateID();
-    this.zIndex = zIndex || GENERATED_ID_IDX+1;
-    this.trf = new Transform(this);
-    this.trf.setParent(this.parent.trf);
+    this.id = generateUID();
+    this.zIndex = zIndex;
+    this.shape = shape || new Shape();
+    this.tex = tex || new Texture();
+    this.trnf = trnf || new Transform();
+    this.subElements = new ElementStore();
   }
-  generateData() { return {
-    Z: this.zIndex,
-    TRF: this.trf.generateData(),
-  }}
-  self() {return this;} // NOTE
-  generateID() {
-    const now = Date.now().toString(16).toUpperCase();
-    GENERATED_ID_IDX += 1;
-    return now + GENERATED_ID_IDX;
+  draw(ctx) {
+    ctx.save();
+    this.trnf.apply(ctx);
+    this.tex.draw(ctx, this.shape.generatePath());
+    this.subElements.draw(ctx);
+    ctx.restore();
   }
-  getInterface() {
-    return this.parent.getInterface();
+  attach(other) {
+    this.subElements.attach(other);
   }
-  remove() {
-    this.getInterface().elements.remove(this);
-  }
-  // must be implemented by subclasses
-  draw(ctx) {}
-  intersects(vector) {}
 }

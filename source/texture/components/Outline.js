@@ -1,8 +1,8 @@
 import Component from '../Component.js';
 
 export default class Outline extends Component {
-  constructor(elm, style, lineWidth, lineCap, lineJoin) {
-    super(elm);
+  constructor(style, lineWidth, lineCap, lineJoin) {
+    super();
     this.style = style;
     this.lineWidth = lineWidth || 1;
     this.lineCap = lineCap || 'butt';

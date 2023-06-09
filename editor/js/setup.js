@@ -101,7 +101,7 @@ export let setupComplexEditor = (editor) => {
       return;
     }
     let complex = new oci.elm.complex.Complex(editor);
-    complex.trf.move(getCenterVector(editor));
+    complex.trnf.move(getCenterVector(editor));
     editor.assignNamed(name, complex);
     $.get('#ComplexSelect').append($.make('option').prop({innerText:name})).prop({value:name}).elm.dispatchEvent(new Event('change'));
     // create a root
