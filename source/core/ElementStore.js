@@ -18,6 +18,9 @@ export default class ElementStore {
   getID(id) {
     return this.elements.filter(e=>{return e.id = id})[0];
   }
-  getIntersecting(vector) { }
-  getIntersectingAll(vector) { }
+  intersectsAny(vector) {
+    return this.elements.map(elm => {return elm.intersects(vector)}).includes(true);
+  }
+  // getIntersecting(vector) { }
+  // getIntersectingAll(vector) { }
 }

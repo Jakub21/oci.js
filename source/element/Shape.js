@@ -13,4 +13,8 @@ export default class Shape {
   intersects(vector) {
     throw `Method "intersects" is not implemented in ${this.constructor.name}`;
   }
+  intersects(vector) {
+    // TODO
+    return $.make('canvas').elm.getContext('2d').isPointInPath(this.generatePath(), ...vector.get());
+  }
 }
