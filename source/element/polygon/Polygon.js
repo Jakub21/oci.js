@@ -18,7 +18,6 @@ export default class Polygon extends Shape {
     this.validatePolygon(params);
     this.vertices = params.vertices;
     // TODO bounding box
-    // TODO triangulate
     super.initialize();
   }
   generatePath() {
