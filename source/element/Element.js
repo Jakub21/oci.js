@@ -32,7 +32,6 @@ export default class Element {
   intersects(vector) {
     vector.z = 1; // Otherwise translation is multiplied by 0
     let relative = this.absolute.inverse().apply(vector.copy());
-    // $.get('#Output').prop({innerText: `${vector.str()}\n${relative.str()}`});
     return this.shape.intersects(relative) || this.subElements.intersectsAny(vector);
   }
 }

@@ -8,9 +8,6 @@ export default class Image extends Pattern {
   }
   apply(mode, ctx) {
     if (!this.ready) return;
-    // let matrix = ctx.getTransform();
-    // $.get('#Output').prop({innerText: `${matrix}`});
-    // this.pattern.setTransform(matrix);
     let matrix = Matrix.Translation(
       new Vector(-this.img.elm.naturalWidth/2, -this.img.elm.naturalHeight/2)
     );

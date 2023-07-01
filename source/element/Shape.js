@@ -11,10 +11,7 @@ export default class Shape {
     throw `Method "generatePath" is not implemented in ${this.constructor.name}`;
   }
   intersects(vector) {
-    throw `Method "intersects" is not implemented in ${this.constructor.name}`;
-  }
-  intersects(vector) {
-    // TODO
+    // TODO: This probably isn't the best solution performance-wise
     return $.make('canvas').elm.getContext('2d').isPointInPath(this.generatePath(), ...vector.get());
   }
 }
