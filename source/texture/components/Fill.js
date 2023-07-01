@@ -1,8 +1,8 @@
 import Component from '../Component.js';
 
 export default class Fill extends Component {
-  constructor(elm, style) {
-    super(elm);
+  constructor(style) {
+    super();
     this.style = style;
   }
   draw(ctx, path) {

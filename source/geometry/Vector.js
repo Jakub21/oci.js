@@ -11,6 +11,9 @@ export default class Vector {
   get() { // 2D
     return [this.x, this.y];
   }
+  str() {
+    return `[${Math.round(this.x*1e3)/1e3}, ${Math.round(this.y*1e3)/1e3}, ${Math.round(this.z*1e3)/1e3}]`;
+  }
   add(other) {
     this.x += other.x;
     this.y += other.y;

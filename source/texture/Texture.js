@@ -1,8 +1,7 @@
 
 export default class Texture {
-  constructor(elm) {
-    this.elm = elm;
-    this.components = [];
+  constructor(components=[]) {
+    this.components = components;
     this.hidden = false;
   }
   hide(flag=true) {

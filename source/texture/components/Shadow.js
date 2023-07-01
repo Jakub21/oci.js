@@ -1,8 +1,8 @@
 import Component from '../Component.js';
 
 export default class Shadow extends Component {
-  constructor(elm, style, offset, blur) {
-    super(elm);
+  constructor(style, offset, blur) {
+    super();
     this.style = style;
     this.offset = offset;
     this.blur = blur;
