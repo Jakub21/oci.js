@@ -16,6 +16,7 @@ export default class CanvasInterface {
   update() {
     this.view.updateSize();
     const ctx = this.canvas.getContext('2d');
+    this.view.apply(ctx);
     this.elements.draw(ctx);
   }
   attach(element) {

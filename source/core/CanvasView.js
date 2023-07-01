@@ -19,6 +19,6 @@ export default class CanvasView {
     this.matrix.mult(Matrix.Rotation(this.rotation));
   }
   apply(ctx) {
-    ctx.transform()
+    ctx.transform(...this.matrix.getDOMValues());
   }
 }
