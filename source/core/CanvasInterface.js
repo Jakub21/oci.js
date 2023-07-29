@@ -12,7 +12,6 @@ export default class CanvasInterface {
       drawElementBoxEnable: true,
     }
   }
-  self() {return this;} // NOTE
   update() {
     this.view.updateSize();
     const ctx = this.canvas.getContext('2d');

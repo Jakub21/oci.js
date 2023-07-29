@@ -1,6 +1,5 @@
-import Component from '../Component.js';
 
-export default class Shadow extends Component {
+export default class Shadow {
   constructor(style, offset, blur) {
     super();
     this.style = style;

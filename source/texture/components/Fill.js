@@ -1,6 +1,5 @@
-import Component from '../Component.js';
 
-export default class Fill extends Component {
+export default class Fill {
   constructor(style) {
     super();
     this.style = style;

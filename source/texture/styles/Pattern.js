@@ -1,4 +1,3 @@
-// TODO: Make sure the pattern is created after image is loaded
 
 export default class Pattern {
   constructor(path, repeat='repeat') {
@@ -18,16 +17,6 @@ export default class Pattern {
     if (!this.ready) return;
     if (mode == 'Fill') ctx.fillStyle = this.pattern;
     else if (mode == 'Outline') ctx.strokeStyle = this.pattern;
-  }
-  align(element) {
-    if (!this.ready) return;
-    // NOTE: should the pattern be scaled with the element?
-    // let matrix = MakeDomMatrix(
-    //   element.trf.getTranslate(),
-    //   element.trf.getRotate(),
-    //   1, //element.trf.getScale(),
-    // );
-    // this.pattern.setTransform(matrix);
   }
   getHex() {
     return this.pattern;

@@ -1,6 +1,5 @@
-import Component from '../Component.js';
 
-export default class Outline extends Component {
+export default class Outline {
   constructor(style, lineWidth, lineCap, lineJoin) {
     super();
     this.style = style;
