@@ -1,7 +1,6 @@
 
 export default class Outline {
   constructor(style, lineWidth, lineCap, lineJoin) {
-    super();
     this.style = style;
     this.lineWidth = lineWidth || 1;
     this.lineCap = lineCap || 'butt';

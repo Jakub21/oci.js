@@ -1,7 +1,6 @@
 
 export default class Fill {
   constructor(style) {
-    super();
     this.style = style;
   }
   draw(ctx, path) {

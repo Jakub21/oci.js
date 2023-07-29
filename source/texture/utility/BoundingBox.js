@@ -1,7 +1,6 @@
 
 export default class BoundingBox {
   constructor(elm, style, radius=5) {
-    super(elm);
     this.elm = elm;
     this.style = style;
     this.radius = radius;

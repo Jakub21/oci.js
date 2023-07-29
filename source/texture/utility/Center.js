@@ -2,7 +2,6 @@ import Vector from '../../geometry/Vector.js';
 
 export default class Center {
   constructor(elm, radius=10) {
-    super(elm);
     this.elm = elm;
     this.radius = radius;
   }
