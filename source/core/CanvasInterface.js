@@ -1,6 +1,6 @@
 import CanvasView from './CanvasView.js';
 import ElementStore from './ElementStore.js';
-import Transform from './Transform.js';
+import Transform from '../geometry/Transform.js';
 
 export default class CanvasInterface {
   constructor(canvas) {
@@ -15,12 +15,11 @@ export default class CanvasInterface {
   self() {return this;} // NOTE
   update() {
     this.view.updateSize();
-    this.elements.drawAll();
+    const ctx = this.canvas.getContext('2d');
+    this.view.apply(ctx);
+    this.elements.draw(ctx);
   }
   attach(element) {
-    this.elements.add(element);
-  }
-  getInterface() {
-    return this;
+    this.elements.attach(element);
   }
 }

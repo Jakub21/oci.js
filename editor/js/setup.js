@@ -1,22 +1,23 @@
+import * as oci from '../../oci.js';
 
-let getVectorStr = (v) => {
+export let getVectorStr = (v) => {
   return `(${v.x}, ${v.y})`;
 }
-let getRotStr = (r) => {
+export let getRotStr = (r) => {
   return `${Math.round(r*1e4)/1e4} rad`;
 }
-let getScaleStr = (f) => {
+export let getScaleStr = (f) => {
   return `x${Math.round(f*1e4)/1e4}`;
 }
 
-let getCenterVector = (editor) => {
+export let getCenterVector = (editor) => {
   let canvas = editor.canvas;
-  return new oci.Vector(
+  return new oci.geo.Vector(
     canvas.clientWidth/2-(canvas.clientWidth/2)%editor.steps.movement,
     canvas.clientHeight/2-(canvas.clientHeight/2)%editor.steps.movement);
 }
 
-let setupImport = (editor) => {
+export let setupImport = (editor) => {
   let input = $.get('#ProjectImport');
   input.prop({accept: '.json'}).on('input', (evt) => {
     const reader = new FileReader();
@@ -28,7 +29,7 @@ let setupImport = (editor) => {
   })
 }
 
-let setupExport = (editor) => {
+export let setupExport = (editor) => {
   let button = $.get('#BtnExport');
   button.on('click', () => {
     $.get('body').appendShp(`
@@ -48,7 +49,7 @@ let setupExport = (editor) => {
   });
 }
 
-let setupEditorValues = (editor) => {
+export let setupEditorValues = (editor) => {
   $.get('#BtnEditorStepMoveInc').on('click', () => {
     editor.steps.movement += 1;
     updateEditorValues(editor);
@@ -80,14 +81,14 @@ let setupEditorValues = (editor) => {
   updateEditorValues(editor);
 }
 
-let updateEditorValues = (editor) => {
+export let updateEditorValues = (editor) => {
   $.get('#ValEditorStepMove').prop({innerText: editor.steps.movement});
   $.get('#ValEditorStepScale').prop({innerText: getScaleStr(editor.steps.scale)});
   $.get('#ValEditorStepRotate').prop({innerText: getRotStr(editor.steps.rotation)});
   $.get('#BtnAnimInstantSnap').prop({checked:editor.settings.instantSnap});
 }
 
-let setupComplexEditor = (editor) => {
+export let setupComplexEditor = (editor) => {
   let cpxInput = $.get('#NameNewComplex');
   $.get('#BtnNewComplex').on('click', () => {
     let name = cpxInput.elm.value;
@@ -99,8 +100,8 @@ let setupComplexEditor = (editor) => {
       alert('Object needs to have a name');
       return;
     }
-    let complex = new oci.cpx.Complex(editor);
-    complex.trf.move(getCenterVector(editor));
+    let complex = new oci.elm.complex.Complex(editor);
+    complex.trnf.move(getCenterVector(editor));
     editor.assignNamed(name, complex);
     $.get('#ComplexSelect').append($.make('option').prop({innerText:name})).prop({value:name}).elm.dispatchEvent(new Event('change'));
     // create a root
@@ -125,19 +126,19 @@ let setupComplexEditor = (editor) => {
     updateComplexValues(editor);
   });
   $.get('#BtnCpxAnchorYDec').on('click', () => {
-    editor.selected.cpx.trf.move(oci.Vector.UnitY().mult(-editor.steps.movement));
+    editor.selected.cpx.trf.move(oci.geo.Vector.UnitY().mult(-editor.steps.movement));
     updateComplexValues(editor);
   });
   $.get('#BtnCpxAnchorYInc').on('click', () => {
-    editor.selected.cpx.trf.move(oci.Vector.UnitY().mult(editor.steps.movement));
+    editor.selected.cpx.trf.move(oci.geo.Vector.UnitY().mult(editor.steps.movement));
     updateComplexValues(editor);
   });
   $.get('#BtnCpxAnchorXDec').on('click', () => {
-    editor.selected.cpx.trf.move(oci.Vector.UnitX().mult(-editor.steps.movement));
+    editor.selected.cpx.trf.move(oci.geo.Vector.UnitX().mult(-editor.steps.movement));
     updateComplexValues(editor);
   });
   $.get('#BtnCpxAnchorXInc').on('click', () => {
-    editor.selected.cpx.trf.move(oci.Vector.UnitX().mult(editor.steps.movement));
+    editor.selected.cpx.trf.move(oci.geo.Vector.UnitX().mult(editor.steps.movement));
     updateComplexValues(editor);
   });
   $.get('#BtnCpxRotDec').on('click', () => {
@@ -158,14 +159,14 @@ let setupComplexEditor = (editor) => {
   });
 }
 
-let updateComplexValues = (editor) => {
+export let updateComplexValues = (editor) => {
   let complex = editor.selected.cpx;
   $.get('#ValCpxAnchor').prop({innerText: getVectorStr(complex.trf._anchor)});
   $.get('#ValCpxRotation').prop({innerText: getRotStr(complex.trf._rotation)});
   $.get('#ValCpxScale').prop({innerText: getScaleStr(complex.trf._scale)});
 }
 
-let updateLimbSelector = (editor) => {
+export let updateLimbSelector = (editor) => {
   $.get('#AttachmentSelect').empty();
   $.get('#LimbSelect').empty();
   let complex = editor.selected.cpx;
@@ -182,7 +183,7 @@ let updateLimbSelector = (editor) => {
   }
 }
 
-let updateLimbValues = (editor) => {
+export let updateLimbValues = (editor) => {
   let limb = editor.selected.limb;
   $.get('#ValLimbScale').prop({innerText: getScaleStr(limb.trf._scale)});
   if (limb == editor.selected.cpx._root) return;
@@ -193,23 +194,23 @@ let updateLimbValues = (editor) => {
   $.get('#ValJointRotation').prop({innerText: getRotStr(joint.target._rotation)});
 }
 
-let createNewLimb = (editor, limbName, parent) => {
+export let createNewLimb = (editor, limbName, parent) => {
   let complex = editor.selected.cpx;
   if (complex == undefined) {
     alert('Invalid complex selected, cannot add a limb');
     return;
   }
   let handle = (limbName == '')? complex.root : complex.limb(limbName, parent);
-  let prm = new oci.prm.Rectangle(handle, 100, 100);
-  new oci.tex.Outline(prm, new oci.tex.Color(150, 255, 150, 100));
-  new oci.tex.JointAnchor(prm);
+  let prm = new oci.elm.poly.Rectangle(handle, 100, 100);
+  new oci.tex.components.Outline(prm, new oci.tex.styles.Color(150, 255, 150, 100));
+  new oci.tex.utility.JointAnchor(prm);
   if (limbName == '') limbName = 'ROOT';
   $.get('#LimbSelect').append($.make('option').prop({innerText: limbName
   })).prop({value:limbName}).elm.dispatchEvent(new Event('change'));
   $.get('#AttachmentSelect').append($.make('option').prop({innerText: limbName}));
 }
 
-let setupLimbEditor = (editor) => {
+export let setupLimbEditor = (editor) => {
   let limbInput = $.get('#NameNewLimb');
   $.get('#BtnNewLimb').on('click', () => {
     let limbName = limbInput.elm.value;
@@ -244,19 +245,19 @@ let setupLimbEditor = (editor) => {
     reader.addEventListener('load', (event) => {
       let limb = editor.selected.limb;
       limb.tex.reset();
-      let imf = new oci.tex.ImageFill(limb, event.target.result);
-      new oci.tex.JointAnchor(limb);
-      new oci.tex.Outline(limb, new oci.tex.Color(150, 255, 150, 100));
+      let imf = new oci.tex.components.ImageFill(limb, event.target.result);
+      new oci.tex.utility.JointAnchor(limb);
+      new oci.tex.components.Outline(limb, new oci.tex.styles.Color(150, 255, 150, 100));
       imf.image.on('load', (evt) => {
-        let size = new oci.Vector(imf.image.elm.naturalWidth, imf.image.elm.naturalHeight);
+        let size = new oci.geo.Vector(imf.image.elm.naturalWidth, imf.image.elm.naturalHeight);
         limb.vertices = [];
-        limb.vertices.push(new oci.Vector(size.x/2, size.y/2));
-        limb.vertices.push(new oci.Vector(-size.x/2, size.y/2));
-        limb.vertices.push(new oci.Vector(-size.x/2, -size.y/2));
-        limb.vertices.push(new oci.Vector(size.x/2, -size.y/2));
+        limb.vertices.push(new oci.geo.Vector(size.x/2, size.y/2));
+        limb.vertices.push(new oci.geo.Vector(-size.x/2, size.y/2));
+        limb.vertices.push(new oci.geo.Vector(-size.x/2, -size.y/2));
+        limb.vertices.push(new oci.geo.Vector(size.x/2, -size.y/2));
         limb.triangulate();
-        limb.box = oci.Box.FromVertices(limb.vertices);
-        imf.transform(oci.Matrix.Translation(new oci.Vector(-size.x/2, -size.y/2)));
+        limb.box = oci.geo.Box.FromVertices(limb.vertices);
+        imf.transform(oci.geo.Matrix.Translation(new oci.geo.Vector(-size.x/2, -size.y/2)));
       });
     });
     reader.readAsDataURL(evt.target.files[0]);
@@ -273,36 +274,36 @@ let setupLimbEditor = (editor) => {
   });
   // JOINT ANCHOR
   $.get('#BtnJointAnchorYDec').on('click', () => {
-    editor.selected.joint.move(oci.Vector.UnitY().mult(-editor.steps.movement));
+    editor.selected.joint.move(oci.geo.Vector.UnitY().mult(-editor.steps.movement));
     updateLimbValues(editor);
   });
   $.get('#BtnJointAnchorYInc').on('click', () => {
-    editor.selected.joint.move(oci.Vector.UnitY().mult(editor.steps.movement));
+    editor.selected.joint.move(oci.geo.Vector.UnitY().mult(editor.steps.movement));
     updateLimbValues(editor);
   });
   $.get('#BtnJointAnchorXDec').on('click', () => {
-    editor.selected.joint.move(oci.Vector.UnitX().mult(-editor.steps.movement));
+    editor.selected.joint.move(oci.geo.Vector.UnitX().mult(-editor.steps.movement));
     updateLimbValues(editor);
   });
   $.get('#BtnJointAnchorXInc').on('click', () => {
-    editor.selected.joint.move(oci.Vector.UnitX().mult(editor.steps.movement));
+    editor.selected.joint.move(oci.geo.Vector.UnitX().mult(editor.steps.movement));
     updateLimbValues(editor);
   });
   // JOINT OFFSET
   $.get('#BtnJointOffsetYDec').on('click', () => {
-    editor.selected.joint.offset(oci.Vector.UnitY().mult(-editor.steps.movement));
+    editor.selected.joint.offset(oci.geo.Vector.UnitY().mult(-editor.steps.movement));
     updateLimbValues(editor);
   });
   $.get('#BtnJointOffsetYInc').on('click', () => {
-    editor.selected.joint.offset(oci.Vector.UnitY().mult(editor.steps.movement));
+    editor.selected.joint.offset(oci.geo.Vector.UnitY().mult(editor.steps.movement));
     updateLimbValues(editor);
   });
   $.get('#BtnJointOffsetXDec').on('click', () => {
-    editor.selected.joint.offset(oci.Vector.UnitX().mult(-editor.steps.movement));
+    editor.selected.joint.offset(oci.geo.Vector.UnitX().mult(-editor.steps.movement));
     updateLimbValues(editor);
   });
   $.get('#BtnJointOffsetXInc').on('click', () => {
-    editor.selected.joint.offset(oci.Vector.UnitX().mult(editor.steps.movement));
+    editor.selected.joint.offset(oci.geo.Vector.UnitX().mult(editor.steps.movement));
     updateLimbValues(editor);
   });
   // JOINT ROTATION

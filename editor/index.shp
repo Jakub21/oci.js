@@ -6,12 +6,10 @@ $html {
     %link[rel stylesheet href 'style.css']
     $script[src 'lib/shp.js']
     $script[src 'lib/Domi.js']
-    $script[src '../build/oci.js']
     $script[src 'js/FpsMeter.js']
-    $script[src 'js/setup.js']
-    $script[src 'index.js']
+    $script[src 'js/index.js' type module]
   }
-  $body[onload 'initialize();'] {
+  $body {
     $div[.Menu #LeftPane] {
       $div[.MenuSection] {
         $h3 {Add new object}

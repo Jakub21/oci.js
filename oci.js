@@ -1,5 +1,5 @@
 
 export * as core from './source/core/_index.js';
-export * as prm from './source/prm/_index.js';
-export * as tex from './source/tex/_index.js';
-export * as cpx from './source/cpx/_index.js';
+export * as elm from './source/element/_index.js';
+export * as geo from './source/geometry/_index.js';
+export * as tex from './source/texture/_index.js';
