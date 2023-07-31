@@ -11,13 +11,6 @@ export default class Transform {
     this.matrix = new Matrix();
     this.dirty = true;
   }
-  generateData() {
-    return {
-      a: [this._anchor.x, this._anchor.y],
-      o: [this._offset.x, this._offset.y],
-      s: this._scale, r: this._rotation,
-    }
-  }
   set(anchor, offset, scale, rotation) {
     this._anchor = anchor;
     this._offset = offset;
