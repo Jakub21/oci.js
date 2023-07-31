@@ -21,6 +21,9 @@ export default class ElementStore {
   intersectsAny(vector) {
     return this.elements.map(elm => {return elm.intersects(vector)}).includes(true);
   }
+  count() {
+    return this.elements.length;
+  }
   // getIntersecting(vector) { }
   // getIntersectingAll(vector) { }
 }

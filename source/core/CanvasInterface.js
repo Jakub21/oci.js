@@ -21,4 +21,7 @@ export default class CanvasInterface {
   attach(element) {
     this.elements.attach(element);
   }
+  getAutoZ() {
+    return this.elements.count();
+  }
 }

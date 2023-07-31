@@ -1,13 +1,20 @@
 import Vector from './Vector.js';
 import Matrix from './Matrix.js';
 
+/*
+Transform parameters
+  ax, ay = anchor (x, y)
+  ox, oy = offset (x, y)
+  s = scale
+  r = rotation
+*/
 
 export default class Transform {
-  constructor(ax=0, ay=0, ox=0, oy=0, s=1, r=0) {
-    this._anchor = new Vector(ax, ay);
-    this._offset = new Vector(ox, oy);
-    this._scale = s;
-    this._rotation = r;
+  constructor(params={}) {
+    this._anchor = new Vector(params.ax || 0, params.ay || 0);
+    this._offset = new Vector(params.ox || 0, params.oy || 0);
+    this._scale = params.s || 1;
+    this._rotation = params.r || 0;
     this.matrix = new Matrix();
     this.dirty = true;
   }

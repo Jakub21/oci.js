@@ -2,19 +2,18 @@ import Transform from '../geometry/Transform.js';
 import {generateUID} from '../core/common.js';
 import ElementStore from '../core/ElementStore.js'
 import Texture from '../texture/Texture.js';
-import Shape from './shapeFactory.js';
 import Matrix from '../geometry/Matrix.js';
 
 
 export default class Element {
-  constructor(parent, zIndex=0, shape, tex, trnf) {
+  constructor(parent, data) {
     this.parent = parent;
     parent.attach(this);
     this.id = generateUID();
-    this.zIndex = zIndex;
-    this.shape = shape || new Shape();
-    this.tex = tex || new Texture();
-    this.trnf = trnf || new Transform();
+    this.shape = data.shape;
+    this.tex = data.texture || new Texture();
+    this.trnf = data.transform || new Transform();
+    this.zIndex = data.zIndex || this.parent.getAutoZ();
     this.subElements = new ElementStore();
     this.absolute = new Matrix();
   }
@@ -33,5 +32,8 @@ export default class Element {
     vector.z = 1; // Otherwise translation is multiplied by 0
     let relative = this.absolute.inverse().apply(vector.copy());
     return this.shape.intersects(relative) || this.subElements.intersectsAny(vector);
+  }
+  getAutoZ() {
+    return this.zIndex + 0.01; // TODO #14
   }
 }
