@@ -5,6 +5,8 @@ export default class Box {
     this.ymin = ymin;
     this.xmax = xmax;
     this.ymax = ymax;
+    this.xsize = xmax - xmin;
+    this.ysize = ymax - ymin;
   }
   static FromVertices(points) {
     const funcMin = (a,b) => {return (a<b)? a : b;};

@@ -1,6 +1,5 @@
 
-// export * as complex from './_complex/_index.js';
-export * as elliptic from './polygon/_index.js';
+export * as elliptic from './elliptic/_index.js';
 export * as polygon from './polygon/_index.js';
 
 export {default as Element} from './Element.js';

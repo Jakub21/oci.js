@@ -19,10 +19,19 @@ export default class Kinetics {
   }
   update(element) {
     if (!this.enabled) return;
-    this.velocity.add(this.acceleration)
+    this.velocity.add(this.acceleration);
     element.trnf.move(this.velocity);
   }
   setVelocity(velocity) {
     this.velocity = velocity.copy();
+  }
+  addVelocity(delta) {
+    this.velocity.add(delta);
+  }
+  setAcceleration(acceleration) {
+    this.acceleration = acceleration.copy();
+  }
+  addAcceleration(delta) {
+    this.acceleration.add(delta);
   }
 }
