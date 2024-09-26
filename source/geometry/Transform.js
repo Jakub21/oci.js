@@ -80,7 +80,7 @@ export default class Transform {
 
   // getters
   getPosition() {
-    return this.offset.copy();
+    return this._anchor.copy();
   }
   getOffset() {
     return this._offset.copy();
